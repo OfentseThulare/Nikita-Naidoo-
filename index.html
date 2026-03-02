@@ -31,6 +31,7 @@
     html {
       scroll-behavior: smooth;
       font-size: 16px;
+      scroll-padding-top: 80px;
     }
 
     body {
@@ -965,6 +966,9 @@
       box-shadow: var(--shadow-md);
       position: sticky;
       top: 88px;
+      max-height: calc(100vh - 104px);
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
     }
 
     .calc-group-title {
@@ -1233,10 +1237,13 @@
 
     .proj-table-wrap {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
     }
 
     .proj-table {
       width: 100%;
+      min-width: 560px;
       border-collapse: collapse;
       font-size: 0.8rem;
     }
@@ -1308,6 +1315,41 @@
       .results-grid { grid-template-columns: 1fr; }
       .two-pot-row  { grid-template-columns: 1fr; }
       .field-row-2  { grid-template-columns: 1fr; }
+
+      .calc-inputs {
+        padding: 20px 16px;
+      }
+
+      .results-panel {
+        padding: 16px;
+      }
+
+      .fais-full {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .two-pot-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Respect user motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
     }
   </style>
 </head>
