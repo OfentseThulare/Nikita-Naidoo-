@@ -930,6 +930,385 @@
         font-size: 2rem;
       }
     }
+
+    /* ================================================================
+       RETIREMENT CALCULATOR
+       ================================================================ */
+    .calculator {
+      background: var(--blue-light);
+    }
+
+    .calc-info-banner {
+      background: #fff8e1;
+      border: 1px solid #f9a825;
+      border-left: 4px solid #f9a825;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-bottom: 32px;
+      font-size: 0.83rem;
+      color: #5d4200;
+      line-height: 1.55;
+    }
+
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* --- Inputs Panel --- */
+    .calc-inputs {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 88px;
+    }
+
+    .calc-group-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue-primary);
+      margin: 22px 0 14px;
+      padding-bottom: 7px;
+      border-bottom: 1.5px solid var(--blue-light);
+    }
+
+    .calc-group-title:first-child {
+      margin-top: 0;
+    }
+
+    .calc-field {
+      margin-bottom: 14px;
+    }
+
+    .calc-field label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .calc-field label .field-hint {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    .calc-field input[type="number"],
+    .calc-field select {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1.5px solid #e0e0ef;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-family: inherit;
+      color: var(--text-primary);
+      background: var(--white);
+      transition: border-color var(--transition);
+      -webkit-appearance: none;
+    }
+
+    .calc-field input[type="number"]:focus,
+    .calc-field select:focus {
+      outline: none;
+      border-color: var(--blue-primary);
+    }
+
+    .calc-field input[type="range"] {
+      width: 100%;
+      margin-top: 4px;
+      accent-color: var(--blue-primary);
+      cursor: pointer;
+    }
+
+    .range-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .range-row input[type="range"] {
+      flex: 1;
+      margin-top: 0;
+    }
+
+    .range-row .range-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      min-width: 44px;
+      text-align: right;
+    }
+
+    .field-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .prefix-wrap {
+      position: relative;
+    }
+
+    .prefix-wrap .prefix-sym {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .prefix-wrap input {
+      padding-left: 24px !important;
+    }
+
+    /* --- Results Panel --- */
+    .calc-results {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .result-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .result-card.rc-primary {
+      background: var(--blue-primary);
+    }
+
+    .result-card.rc-primary .rc-label { color: rgba(255,255,255,0.75); }
+    .result-card.rc-primary .rc-value { color: #fff; }
+    .result-card.rc-primary .rc-sub   { color: rgba(255,255,255,0.6); }
+
+    .result-card.rc-gap   { border-left: 4px solid #ef4444; }
+    .result-card.rc-surplus { border-left: 4px solid #22c55e; }
+    .result-card.rc-neutral { border-left: 4px solid var(--blue-accent); }
+
+    .rc-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .rc-value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--blue-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .rc-value.small { font-size: 1.1rem; }
+
+    .rc-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* Results card sections */
+    .results-panel {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .results-panel h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--blue-light);
+    }
+
+    /* Tax breakdown rows */
+    .tax-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tax-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.86rem;
+    }
+
+    .tax-row .tr-label { color: var(--text-secondary); }
+    .tax-row .tr-val   { font-weight: 600; color: var(--text-primary); }
+
+    .tax-row.tr-highlight {
+      background: var(--blue-light);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      margin-top: 4px;
+    }
+
+    .tax-row.tr-highlight .tr-label {
+      color: var(--blue-primary);
+      font-weight: 700;
+    }
+
+    .tax-row.tr-highlight .tr-val {
+      color: var(--blue-primary);
+      font-size: 0.98rem;
+      font-weight: 800;
+    }
+
+    /* Two-Pot */
+    .two-pot-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .pot-tile {
+      background: var(--blue-light);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+    }
+
+    .pot-tile-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--blue-primary);
+      margin-bottom: 5px;
+    }
+
+    .pot-tile-val {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .pot-tile-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Projection table */
+    .nominal-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .nominal-toggle input {
+      accent-color: var(--blue-primary);
+      cursor: pointer;
+    }
+
+    .proj-table-wrap {
+      overflow-x: auto;
+    }
+
+    .proj-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .proj-table th {
+      background: var(--blue-primary);
+      color: #fff;
+      padding: 7px 12px;
+      text-align: right;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .proj-table th:first-child { text-align: left; }
+
+    .proj-table td {
+      padding: 7px 12px;
+      text-align: right;
+      border-bottom: 1px solid var(--blue-light);
+      color: var(--text-secondary);
+    }
+
+    .proj-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .proj-table tr:hover td { background: #f5f7ff; }
+
+    .proj-table tr.retirement-row td {
+      font-weight: 700;
+      color: var(--blue-primary);
+      background: #eef2ff;
+    }
+
+    /* FAIS full disclaimer */
+    .fais-full {
+      background: var(--white);
+      border: 1px solid #e0e0ef;
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .fais-full strong {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .fais-full p + p { margin-top: 6px; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .calc-layout {
+        grid-template-columns: 1fr;
+      }
+      .calc-inputs { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .results-grid { grid-template-columns: 1fr; }
+      .two-pot-row  { grid-template-columns: 1fr; }
+      .field-row-2  { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
@@ -948,6 +1327,7 @@
       <ul class="navbar-links" id="navLinks">
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
+        <li><a href="#calculator">Calculator</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -1100,6 +1480,333 @@
           <p>Disciplined, goal-oriented planning to grow and preserve your wealth over time.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RETIREMENT CALCULATOR
+       ============================================================ -->
+  <section class="calculator section-padding" id="calculator">
+    <div class="container">
+      <h2 class="section-heading reveal">Retirement Planning Calculator</h2>
+      <p class="section-subheading reveal">Illustrative projections using 2025/2026 South African tax rules. All figures
+        are estimates — not financial advice.</p>
+
+      <div class="calc-info-banner reveal">
+        <strong>For illustrative purposes only.</strong> This calculator provides general financial information based on
+        standard formulas and the inputs you supply. It does not constitute financial advice as defined in the FAIS Act
+        (Act 37 of 2002) and does not recommend any specific financial product. Please consult a licensed Financial
+        Services Provider before making any financial decisions.
+      </div>
+
+      <div class="calc-layout reveal">
+
+        <!-- ===== INPUT PANEL ===== -->
+        <div class="calc-inputs">
+
+          <div class="calc-group-title">Personal Details</div>
+
+          <div class="field-row-2">
+            <div class="calc-field">
+              <label>Current Age <span class="field-hint">years</span></label>
+              <input type="number" id="c-currentAge" value="35" min="18" max="64" />
+            </div>
+            <div class="calc-field">
+              <label>Retirement Age <span class="field-hint">years</span></label>
+              <input type="number" id="c-retirementAge" value="65" min="55" max="75" />
+            </div>
+          </div>
+
+          <div class="field-row-2">
+            <div class="calc-field">
+              <label>Life Expectancy <span class="field-hint">years</span></label>
+              <input type="number" id="c-lifeExpectancy" value="90" min="70" max="100" />
+            </div>
+            <div class="calc-field">
+              <label>Age Category</label>
+              <select id="c-ageCategory">
+                <option value="under65">Under 65</option>
+                <option value="65to74">Age 65–74</option>
+                <option value="75plus">Age 75+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="calc-group-title">Income</div>
+
+          <div class="calc-field">
+            <label>Current Annual Gross Income</label>
+            <div class="prefix-wrap">
+              <span class="prefix-sym">R</span>
+              <input type="number" id="c-grossIncome" value="600000" min="0" step="1000" />
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label>Annual Salary Escalation <span class="field-hint" id="lbl-salEsc">5.0%</span></label>
+            <div class="range-row">
+              <input type="range" id="c-salEsc" min="0" max="15" step="0.5" value="5" />
+              <span class="range-val" id="val-salEsc">5.0%</span>
+            </div>
+          </div>
+
+          <div class="calc-group-title">Retirement Savings &amp; Contributions</div>
+
+          <div class="calc-field">
+            <label>Current Retirement Fund Balance <span class="field-hint">(RA / pension / provident)</span></label>
+            <div class="prefix-wrap">
+              <span class="prefix-sym">R</span>
+              <input type="number" id="c-currentBalance" value="150000" min="0" step="1000" />
+            </div>
+          </div>
+
+          <div class="field-row-2">
+            <div class="calc-field">
+              <label>Your Monthly RA Contribution</label>
+              <div class="prefix-wrap">
+                <span class="prefix-sym">R</span>
+                <input type="number" id="c-monthlyRA" value="5000" min="0" step="100" />
+              </div>
+            </div>
+            <div class="calc-field">
+              <label>Employer Monthly Contribution</label>
+              <div class="prefix-wrap">
+                <span class="prefix-sym">R</span>
+                <input type="number" id="c-monthlyEmployer" value="2000" min="0" step="100" />
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label>Current TFSA Balance</label>
+            <div class="prefix-wrap">
+              <span class="prefix-sym">R</span>
+              <input type="number" id="c-tfsaBalance" value="50000" min="0" step="1000" />
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label>Monthly TFSA Contribution <span class="field-hint">(max R3,000/month = R36k/yr)</span></label>
+            <div class="prefix-wrap">
+              <span class="prefix-sym">R</span>
+              <input type="number" id="c-monthlyTFSA" value="1000" min="0" max="3000" step="100" />
+            </div>
+          </div>
+
+          <div class="calc-group-title">Projection Assumptions</div>
+
+          <div class="calc-field">
+            <label>Portfolio Type</label>
+            <select id="c-portfolioType">
+              <option value="7.5">Conservative — CPI+1–2% (~7.5% nominal)</option>
+              <option value="10" selected>Moderate/Balanced — CPI+3–4% (~10% nominal)</option>
+              <option value="11.5">Aggressive/High Equity — CPI+5–6% (~11.5% nominal)</option>
+              <option value="custom">Custom return rate</option>
+            </select>
+          </div>
+
+          <div class="calc-field" id="customReturnField" style="display:none;">
+            <label>Custom Annual Return <span class="field-hint" id="lbl-customReturn">10.0%</span></label>
+            <div class="range-row">
+              <input type="range" id="c-customReturn" min="4" max="18" step="0.5" value="10" />
+              <span class="range-val" id="val-customReturn">10.0%</span>
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label>Long-Term Inflation Assumption <span class="field-hint" id="lbl-inflation">5.5%</span></label>
+            <div class="range-row">
+              <input type="range" id="c-inflation" min="3" max="9" step="0.5" value="5.5" />
+              <span class="range-val" id="val-inflation">5.5%</span>
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label>Target Income Replacement Ratio <span class="field-hint" id="lbl-replRatio">75%</span></label>
+            <div class="range-row">
+              <input type="range" id="c-replRatio" min="50" max="100" step="5" value="75" />
+              <span class="range-val" id="val-replRatio">75%</span>
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label>Drawdown Rate (Living Annuity) <span class="field-hint" id="lbl-drawdown">4.0%</span></label>
+            <div class="range-row">
+              <input type="range" id="c-drawdown" min="2.5" max="17.5" step="0.5" value="4" />
+              <span class="range-val" id="val-drawdown">4.0%</span>
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <label>Total Expense Ratio (TER) <span class="field-hint" id="lbl-ter">1.5%</span></label>
+            <div class="range-row">
+              <input type="range" id="c-ter" min="0.5" max="3" step="0.25" value="1.5" />
+              <span class="range-val" id="val-ter">1.5%</span>
+            </div>
+          </div>
+
+        </div>
+        <!-- /calc-inputs -->
+
+        <!-- ===== RESULTS PANEL ===== -->
+        <div class="calc-results" id="calc-results">
+
+          <!-- Key Metrics -->
+          <div class="results-grid">
+            <div class="result-card rc-primary">
+              <div class="rc-label">Projected Retirement Pot</div>
+              <div class="rc-value" id="r-projPot">—</div>
+              <div class="rc-sub" id="r-projPotSub">in today's rands at retirement</div>
+            </div>
+            <div class="result-card rc-neutral">
+              <div class="rc-label">Required Retirement Pot</div>
+              <div class="rc-value" id="r-reqPot">—</div>
+              <div class="rc-sub" id="r-reqPotSub">based on replacement ratio &amp; drawdown</div>
+            </div>
+            <div class="result-card" id="r-gapCard">
+              <div class="rc-label" id="r-gapLabel">Funding Gap</div>
+              <div class="rc-value small" id="r-gap">—</div>
+              <div class="rc-sub" id="r-gapSub">in today's rands</div>
+            </div>
+            <div class="result-card rc-neutral">
+              <div class="rc-label">Est. Monthly Income at Retirement</div>
+              <div class="rc-value small" id="r-monthlyIncome">—</div>
+              <div class="rc-sub">today's rands, from retirement pot only</div>
+            </div>
+          </div>
+
+          <!-- RA Tax Saving -->
+          <div class="results-panel">
+            <h4>RA Tax Analysis — Current Tax Year (2025/2026)</h4>
+            <div class="tax-rows">
+              <div class="tax-row">
+                <span class="tr-label">Gross Annual Income</span>
+                <span class="tr-val" id="r-grossIncome">—</span>
+              </div>
+              <div class="tax-row">
+                <span class="tr-label">Allowable RA Deduction (27.5%, max R350k)</span>
+                <span class="tr-val" id="r-raDeduction">—</span>
+              </div>
+              <div class="tax-row">
+                <span class="tr-label">Taxable Income (after deduction)</span>
+                <span class="tr-val" id="r-taxableIncome">—</span>
+              </div>
+              <div class="tax-row">
+                <span class="tr-label">Income Tax Without RA Deduction</span>
+                <span class="tr-val" id="r-taxWithout">—</span>
+              </div>
+              <div class="tax-row">
+                <span class="tr-label">Income Tax With RA Deduction</span>
+                <span class="tr-val" id="r-taxWith">—</span>
+              </div>
+              <div class="tax-row">
+                <span class="tr-label">Marginal Tax Rate</span>
+                <span class="tr-val" id="r-margRate">—</span>
+              </div>
+              <div class="tax-row tr-highlight">
+                <span class="tr-label">Annual RA Tax Saving</span>
+                <span class="tr-val" id="r-taxSaving">—</span>
+              </div>
+              <div class="tax-row tr-highlight">
+                <span class="tr-label">Effective Net RA Cost (after tax relief)</span>
+                <span class="tr-val" id="r-netRaCost">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Pot Breakdown -->
+          <div class="results-panel">
+            <h4>Two-Pot System — Estimated Split at Retirement</h4>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;">
+              Based on Two-Pot rules (effective 1 Sep 2024): ⅓ of new contributions → Savings Pot (accessible); ⅔ →
+              Retirement Pot (locked until retirement). Existing balance treated as Vested Pot.
+            </p>
+            <div class="two-pot-row">
+              <div class="pot-tile">
+                <div class="pot-tile-label">Savings Pot</div>
+                <div class="pot-tile-val" id="r-savingsPot">—</div>
+                <div class="pot-tile-sub">⅓ of future contributions</div>
+              </div>
+              <div class="pot-tile">
+                <div class="pot-tile-label">Retirement Pot</div>
+                <div class="pot-tile-val" id="r-retirementPot">—</div>
+                <div class="pot-tile-sub">⅔ of future contributions</div>
+              </div>
+              <div class="pot-tile">
+                <div class="pot-tile-label">Vested Pot</div>
+                <div class="pot-tile-val" id="r-vestedPot">—</div>
+                <div class="pot-tile-sub">pre-Sep 2024 balance</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TFSA Panel -->
+          <div class="results-panel">
+            <h4>Tax-Free Savings Account (TFSA) Projection</h4>
+            <div class="tax-rows">
+              <div class="tax-row">
+                <span class="tr-label">Projected TFSA at Retirement (today's rands)</span>
+                <span class="tr-val" id="r-tfsaProj">—</span>
+              </div>
+              <div class="tax-row">
+                <span class="tr-label">Annual TFSA Contribution</span>
+                <span class="tr-val" id="r-tfsaAnnual">—</span>
+              </div>
+              <div class="tax-row">
+                <span class="tr-label">TFSA Lifetime Limit Remaining</span>
+                <span class="tr-val" id="r-tfsaRemaining">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Year-by-Year Projection -->
+          <div class="results-panel">
+            <h4>Year-by-Year Accumulation Projection</h4>
+            <label class="nominal-toggle">
+              <input type="checkbox" id="c-showNominal" />
+              Show nominal (future) rands instead of today's rands
+            </label>
+            <div class="proj-table-wrap">
+              <table class="proj-table" id="proj-table">
+                <thead>
+                  <tr>
+                    <th>Age</th>
+                    <th>Year</th>
+                    <th>Annual Contribution</th>
+                    <th>Retirement Fund</th>
+                    <th>TFSA</th>
+                    <th>Combined</th>
+                  </tr>
+                </thead>
+                <tbody id="proj-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- FAIS Disclaimer -->
+          <div class="fais-full">
+            <strong>Regulatory Disclaimer</strong>
+            <p>This calculator is provided for general financial information purposes only and does <strong>not</strong>
+              constitute financial advice as defined in the Financial Advisory and Intermediary Services Act (FAIS Act,
+              Act 37 of 2002). Results are illustrative projections generated from user-supplied inputs and standard
+              mathematical formulas; they do not reflect actual investment outcomes.</p>
+            <p>Past performance is not indicative of future results (General Code of Conduct, Section 3(1)(c)). All
+              return assumptions are based on long-term historical averages for ASISA-categorised SA multi-asset
+              portfolios and may differ materially from actual fund performance. Inflation assumptions are based on
+              SARB target-band midpoints and long-term SA CPI averages.</p>
+            <p>This tool does not recommend any specific financial product, fund, or investment strategy. Tax
+              calculations are based on 2025/2026 tax year parameters (frozen at 2024/2025 levels per the 2025
+              National Budget). Individual tax circumstances may differ. The Two-Pot Retirement System
+              calculations are based on rules effective 1 September 2024.</p>
+            <p>Nikita Naidoo is an Authorised Financial Services Provider under the FAIS Act. Please consult a
+              licensed FSP before making any financial or investment decisions. Results should not be relied upon
+              as a basis for any financial, legal, or tax decision.</p>
+          </div>
+
+        </div>
+        <!-- /calc-results -->
+      </div>
+      <!-- /calc-layout -->
     </div>
   </section>
 
@@ -1271,6 +1978,270 @@
        JAVASCRIPT
        ============================================================ -->
   <script>
+    /* ================================================================
+       RETIREMENT CALCULATOR ENGINE
+       ================================================================ */
+
+    // ---- Tax configuration (2025/2026, frozen at 2024/2025 levels) ----
+    const TAX_BRACKETS = [
+      { upper: 237100,   base: 0,      excess: 0,       rate: 0.18 },
+      { upper: 370500,   base: 42678,  excess: 237100,  rate: 0.26 },
+      { upper: 512800,   base: 77362,  excess: 370500,  rate: 0.31 },
+      { upper: 673000,   base: 121475, excess: 512800,  rate: 0.36 },
+      { upper: 857900,   base: 179147, excess: 673000,  rate: 0.39 },
+      { upper: 1817000,  base: 251258, excess: 857900,  rate: 0.41 },
+      { upper: Infinity, base: 644489, excess: 1817000, rate: 0.45 }
+    ];
+
+    const REBATES = { primary: 17235, secondary: 9444, tertiary: 3145 };
+
+    function grossTax(income) {
+      for (const b of TAX_BRACKETS) {
+        if (income <= b.upper) {
+          return b.base + (income - b.excess) * b.rate;
+        }
+      }
+    }
+
+    function netTax(income, ageCategory) {
+      let rebate = REBATES.primary;
+      if (ageCategory === '65to74') rebate += REBATES.secondary;
+      if (ageCategory === '75plus') rebate += REBATES.secondary + REBATES.tertiary;
+      return Math.max(0, grossTax(Math.max(0, income)) - rebate);
+    }
+
+    function marginalRate(income) {
+      for (const b of TAX_BRACKETS) {
+        if (income <= b.upper) return b.rate;
+      }
+      return 0.45;
+    }
+
+    // ---- Currency formatting ----
+    const ZAR = new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR', maximumFractionDigits: 0 });
+    const fmtR = v => ZAR.format(Math.abs(v));
+    const fmtPct = v => (v * 100).toFixed(1) + '%';
+
+    // ---- Main calculation & render ----
+    function runCalculator() {
+      const currentAge     = +document.getElementById('c-currentAge').value   || 35;
+      const retirementAge  = +document.getElementById('c-retirementAge').value || 65;
+      const lifeExpectancy = +document.getElementById('c-lifeExpectancy').value || 90;
+      const ageCategory    = document.getElementById('c-ageCategory').value;
+      const grossIncome    = +document.getElementById('c-grossIncome').value   || 0;
+      const salEsc         = +document.getElementById('c-salEsc').value / 100;
+      const currentBalance = +document.getElementById('c-currentBalance').value || 0;
+      const monthlyRA      = +document.getElementById('c-monthlyRA').value     || 0;
+      const monthlyEmp     = +document.getElementById('c-monthlyEmployer').value || 0;
+      const tfsaBalance    = +document.getElementById('c-tfsaBalance').value   || 0;
+      const monthlyTFSA    = +document.getElementById('c-monthlyTFSA').value   || 0;
+      const inflation      = +document.getElementById('c-inflation').value / 100;
+      const replRatio      = +document.getElementById('c-replRatio').value / 100;
+      const drawdown       = +document.getElementById('c-drawdown').value / 100;
+      const ter            = +document.getElementById('c-ter').value / 100;
+      const showNominal    = document.getElementById('c-showNominal').checked;
+
+      const portfolioSel   = document.getElementById('c-portfolioType').value;
+      const grossReturnPct = portfolioSel === 'custom'
+        ? +document.getElementById('c-customReturn').value / 100
+        : +portfolioSel / 100;
+      const annualReturn   = grossReturnPct - ter; // net-of-fees return
+
+      const yearsToRet  = Math.max(1, retirementAge - currentAge);
+      const retYears    = Math.max(1, lifeExpectancy - retirementAge);
+
+      // ---- RA Tax Analysis ----
+      const annualRAContrib     = (monthlyRA + monthlyEmp) * 12;
+      const maxRADeduction      = Math.min(grossIncome * 0.275, 350000);
+      const actualRADeduction   = Math.min(annualRAContrib, maxRADeduction);
+      const taxableAfterRA      = Math.max(0, grossIncome - actualRADeduction);
+      const taxWithout          = netTax(grossIncome, ageCategory);
+      const taxWith             = netTax(taxableAfterRA, ageCategory);
+      const taxSaving           = taxWithout - taxWith;
+      const margRate            = marginalRate(grossIncome);
+      const netRACost           = annualRAContrib - taxSaving; // effective cost after tax relief
+
+      // ---- Year-by-year accumulation (Three balances: vested, savings, retirement) ----
+      const SAVINGS_SPLIT     = 1 / 3;
+      const RETIREMENT_SPLIT  = 2 / 3;
+
+      let vestedBal    = currentBalance;
+      let savingsBal   = 0;
+      let retireBal    = 0;
+      let tfsaBal      = tfsaBalance;
+      let tfsaLifetime = tfsaBalance; // track lifetime contributions for limit check
+
+      let annualContrib = annualRAContrib;
+      const monthlyRate = Math.pow(1 + annualReturn, 1 / 12) - 1;
+      const tfsaMonthlyRate = Math.pow(1 + annualReturn, 1 / 12) - 1; // same portfolio assumption
+
+      const rows = [];
+
+      for (let yr = 1; yr <= yearsToRet; yr++) {
+        const age = currentAge + yr;
+        const monthlyContrib = annualContrib / 12;
+        const monthlySav = monthlyContrib * SAVINGS_SPLIT;
+        const monthlyRet = monthlyContrib * RETIREMENT_SPLIT;
+
+        // Clamp monthly TFSA to what keeps us under annual R36,000 limit
+        const allowedMonthlyTFSA = Math.min(monthlyTFSA, 3000);
+
+        for (let m = 1; m <= 12; m++) {
+          vestedBal  = vestedBal  * (1 + monthlyRate);          // vested grows, no new contribs
+          savingsBal = savingsBal * (1 + monthlyRate) + monthlySav;
+          retireBal  = retireBal  * (1 + monthlyRate) + monthlyRet;
+          tfsaBal    = tfsaBal    * (1 + tfsaMonthlyRate) + allowedMonthlyTFSA;
+        }
+
+        tfsaLifetime += allowedMonthlyTFSA * 12;
+        annualContrib *= (1 + salEsc);
+
+        const totalNominal = vestedBal + savingsBal + retireBal;
+        const deflator     = Math.pow(1 + inflation, yr);
+        const totalReal    = totalNominal / deflator;
+        const tfsaReal     = tfsaBal / deflator;
+        const annualContribReal = ((monthlyRA + monthlyEmp) * 12 * Math.pow(1 + salEsc, yr)) / deflator;
+
+        rows.push({
+          age,
+          yr,
+          annualContrib: (monthlyRA + monthlyEmp) * 12 * Math.pow(1 + salEsc, yr - 1),
+          retireNominal: totalNominal,
+          retireReal:    totalReal,
+          tfsaNominal:   tfsaBal,
+          tfsaReal,
+          combinedNominal: totalNominal + tfsaBal,
+          combinedReal:    totalReal + tfsaReal,
+          isRetirementYear: age === retirementAge
+        });
+      }
+
+      const lastRow     = rows[rows.length - 1];
+      const projNominal = lastRow.retireNominal;
+      const projReal    = lastRow.retireReal;
+      const tfsaAtRet   = lastRow.tfsaReal;
+
+      // ---- Required Capital (in today's rands) ----
+      // Target income in today's rands = grossIncome × replRatio
+      const targetAnnualIncomeReal = grossIncome * replRatio;
+      const requiredCapitalReal    = targetAnnualIncomeReal / drawdown;
+
+      // ---- Funding gap/surplus (today's rands) ----
+      const totalRealAtRet  = projReal + tfsaAtRet;
+      const fundingGap      = requiredCapitalReal - totalRealAtRet;
+      const hasSurplus      = fundingGap <= 0;
+
+      // ---- Monthly income at retirement from projected pot (today's rands) ----
+      const monthlyIncomeReal = (projReal * drawdown) / 12;
+
+      // ---- Render key metrics ----
+      setText('r-projPot',      fmtR(projReal));
+      setText('r-projPotSub',   'in today\'s rands · nominal: ' + fmtR(projNominal));
+      setText('r-reqPot',       fmtR(requiredCapitalReal));
+      setText('r-reqPotSub',    `${(replRatio*100).toFixed(0)}% replacement · ${(drawdown*100).toFixed(1)}% drawdown`);
+      setText('r-monthlyIncome', fmtR(monthlyIncomeReal) + '/mo');
+
+      // Funding gap card
+      const gapCard = document.getElementById('r-gapCard');
+      gapCard.className = 'result-card ' + (hasSurplus ? 'rc-surplus' : 'rc-gap');
+      setText('r-gapLabel', hasSurplus ? 'Projected Surplus' : 'Funding Gap');
+      setText('r-gap', fmtR(Math.abs(fundingGap)));
+      setText('r-gapSub', hasSurplus
+        ? 'You are on track — projected to exceed target'
+        : 'Additional savings or adjusted assumptions needed');
+
+      // ---- RA Tax analysis ----
+      setText('r-grossIncome',   fmtR(grossIncome));
+      setText('r-raDeduction',   fmtR(actualRADeduction));
+      setText('r-taxableIncome', fmtR(taxableAfterRA));
+      setText('r-taxWithout',    fmtR(taxWithout));
+      setText('r-taxWith',       fmtR(taxWith));
+      setText('r-margRate',      fmtPct(margRate));
+      setText('r-taxSaving',     fmtR(taxSaving) + ' per year');
+      setText('r-netRaCost',     fmtR(netRACost) + ' per year  (' + fmtPct(netRACost / annualRAContrib) + ' of contributions)');
+
+      // ---- Two-Pot breakdown (today's rands at retirement) ----
+      const deflatorRet = Math.pow(1 + inflation, yearsToRet);
+      setText('r-savingsPot',    fmtR(savingsBal / deflatorRet));
+      setText('r-retirementPot', fmtR(retireBal  / deflatorRet));
+      setText('r-vestedPot',     fmtR(vestedBal   / deflatorRet));
+
+      // ---- TFSA ----
+      const tfsaAnnual    = monthlyTFSA * 12;
+      const tfsaRemaining = Math.max(0, 500000 - tfsaLifetime);
+      setText('r-tfsaProj',      fmtR(tfsaAtRet));
+      setText('r-tfsaAnnual',    fmtR(tfsaAnnual) + '/year' + (tfsaAnnual > 36000 ? ' ⚠ exceeds R36,000 limit' : ''));
+      setText('r-tfsaRemaining', fmtR(tfsaRemaining) + ' lifetime limit remaining');
+
+      // ---- Year-by-year table ----
+      const tbody = document.getElementById('proj-tbody');
+      tbody.innerHTML = '';
+      rows.forEach(r => {
+        const nominal = showNominal;
+        const rf  = nominal ? r.retireNominal   : r.retireReal;
+        const tf  = nominal ? r.tfsaNominal      : r.tfsaReal;
+        const cf  = nominal ? r.combinedNominal  : r.combinedReal;
+        const ac  = nominal ? r.annualContrib     : r.annualContrib / Math.pow(1 + inflation, r.yr);
+        const tr  = document.createElement('tr');
+        if (r.isRetirementYear) tr.className = 'retirement-row';
+        tr.innerHTML = `
+          <td>${r.age}${r.isRetirementYear ? ' ★' : ''}</td>
+          <td>${r.yr}</td>
+          <td>${fmtR(ac)}</td>
+          <td>${fmtR(rf)}</td>
+          <td>${fmtR(tf)}</td>
+          <td>${fmtR(cf)}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    // ---- Wire up all input events ----
+    function bindCalcInputs() {
+      const allInputs = document.querySelectorAll(
+        '#c-currentAge, #c-retirementAge, #c-lifeExpectancy, #c-ageCategory, ' +
+        '#c-grossIncome, #c-currentBalance, #c-monthlyRA, #c-monthlyEmployer, ' +
+        '#c-tfsaBalance, #c-monthlyTFSA, #c-inflation, #c-replRatio, ' +
+        '#c-drawdown, #c-ter, #c-portfolioType, #c-customReturn, #c-salEsc, ' +
+        '#c-showNominal'
+      );
+      allInputs.forEach(el => el.addEventListener('input', onCalcInput));
+      allInputs.forEach(el => el.addEventListener('change', onCalcInput));
+    }
+
+    function onCalcInput() {
+      // Sync range display labels
+      syncRange('c-salEsc',      'val-salEsc',      v => v.toFixed(1) + '%');
+      syncRange('c-inflation',   'val-inflation',   v => v.toFixed(1) + '%');
+      syncRange('c-replRatio',   'val-replRatio',   v => v.toFixed(0) + '%');
+      syncRange('c-drawdown',    'val-drawdown',    v => v.toFixed(1) + '%');
+      syncRange('c-ter',         'val-ter',         v => v.toFixed(2) + '%');
+      syncRange('c-customReturn','val-customReturn', v => v.toFixed(1) + '%');
+
+      // Show/hide custom return field
+      const portfolioType = document.getElementById('c-portfolioType').value;
+      document.getElementById('customReturnField').style.display =
+        portfolioType === 'custom' ? '' : 'none';
+
+      runCalculator();
+    }
+
+    function syncRange(rangeId, valId, fmt) {
+      const el = document.getElementById(rangeId);
+      const lbl = document.getElementById(valId);
+      if (el && lbl) lbl.textContent = fmt(+el.value);
+    }
+
+    // Boot on DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      bindCalcInputs();
+      runCalculator();
+    });
+
     /* ---------------------------------------------------------------
        Sticky Navbar — blue border on scroll
        --------------------------------------------------------------- */
