@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Insights Blog | Nikita Naidoo | Sanlam Financial Adviser</title>
+  <meta name="description" content="Expert financial articles on retirement annuities, tax-free investments, life cover, and business protection by Nikita Naidoo, Sanlam Financial Adviser." />
+  <meta name="keywords" content="financial planning blog South Africa, retirement annuity articles, TFSA guide 2026, business protection insurance, Sanlam financial advice" />
+  <meta name="author" content="Nikita Naidoo" />
+  <link rel="canonical" href="https://nikitatrusha.co.za/blog.html" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Financial Insights Blog | Nikita Naidoo" />
+  <meta property="og:description" content="Expert financial articles on retirement planning, tax-free investments, and business protection." />
+  <meta property="og:url" content="https://nikitatrusha.co.za/blog.html" />
+  <meta property="og:site_name" content="Nikita Naidoo Financial Advisory" />
+  <meta property="og:locale" content="en_ZA" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" crossorigin="anonymous" />
+
+  <style>
+    /* ================================================================
+       RESET & BASE
+       ================================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: 80px; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a1a2e;
+      background: #ffffff;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ================================================================
+       DESIGN TOKENS
+       ================================================================ */
+    :root {
+      --blue-primary: #0033A0;
+      --blue-dark: #001F6B;
+      --blue-light: #E8F0FB;
+      --blue-accent: #1A56DB;
+      --white: #ffffff;
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a4a68;
+      --text-muted: #7a7a96;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.10);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --transition: 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+      --max-width: 1200px;
+    }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* ================================================================
+       NAVBAR (shared with index.html)
+       ================================================================ */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--white);
+      border-bottom: 2px solid transparent;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .navbar.scrolled { border-bottom-color: var(--blue-primary); box-shadow: var(--shadow-sm); }
+    .navbar-inner {
+      max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 72px;
+    }
+    .navbar-brand { font-size: 1.25rem; font-weight: 800; color: var(--blue-primary); letter-spacing: -0.02em; }
+    .navbar-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .navbar-links a {
+      font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);
+      transition: color var(--transition); position: relative;
+    }
+    .navbar-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--blue-primary); transition: width var(--transition);
+    }
+    .navbar-links a:hover { color: var(--blue-primary); }
+    .navbar-links a:hover::after { width: 100%; }
+    .navbar-links a.active { color: var(--blue-primary); font-weight: 600; }
+    .navbar-links a.active::after { width: 100%; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--blue-primary); border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ================================================================
+       BLOG PAGE LAYOUT
+       ================================================================ */
+    .blog-page {
+      padding-top: 72px;
+      min-height: 100vh;
+    }
+
+    .blog-hero {
+      background: linear-gradient(135deg, #001F5B 0%, #0033A0 100%);
+      padding: 64px 0 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(255,255,255,0.04) 8px, rgba(255,255,255,0.04) 9px);
+      pointer-events: none;
+    }
+
+    .blog-hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .blog-hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Category filters */
+    .blog-filters {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 24px 0 8px;
+      position: relative;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .filter-btn:hover { background: rgba(255,255,255,0.2); color: var(--white); }
+    .filter-btn.active { background: var(--white); color: var(--blue-primary); border-color: var(--white); }
+
+    /* Blog listing */
+    .blog-listing {
+      padding: 56px 0 80px;
+      background: var(--blue-light);
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .blog-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    .blog-card-image {
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, var(--blue-light) 0%, #c5d8f8 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blue-primary); opacity: 0.7;
+      overflow: hidden;
+    }
+    .blog-card-image img { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+    .blog-card-image svg { width: 48px; height: 48px; }
+
+    .blog-card-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+
+    .blog-category {
+      display: inline-block;
+      background: var(--blue-primary);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .blog-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); line-height: 1.4; margin-bottom: 10px; }
+    .blog-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; flex: 1; }
+
+    .blog-card-meta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .blog-read-time { font-size: 0.78rem; color: var(--text-muted); }
+
+    .blog-read-btn {
+      font-size: 0.85rem; font-weight: 600; color: var(--blue-primary);
+      background: none; border: none; cursor: pointer; padding: 0;
+      display: flex; align-items: center; gap: 4px;
+      transition: color var(--transition); font-family: 'Inter', sans-serif;
+    }
+    .blog-read-btn:hover { color: var(--blue-dark); }
+
+    /* Pagination */
+    .blog-pagination {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 48px;
+    }
+
+    .page-btn {
+      padding: 10px 16px; font-family: 'Inter', sans-serif;
+      font-size: 0.88rem; font-weight: 600;
+      color: var(--blue-primary); background: var(--white);
+      border: 1.5px solid var(--blue-primary);
+      border-radius: var(--radius-sm);
+      cursor: pointer; transition: all var(--transition);
+    }
+    .page-btn:hover, .page-btn.active { background: var(--blue-primary); color: var(--white); }
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* Article Full View */
+    .blog-article-page {
+      display: none;
+      padding: 56px 0 80px;
+      background: var(--white);
+    }
+    .blog-article-page.active { display: block; }
+
+    .blog-article-container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .blog-back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.88rem; font-weight: 600; color: var(--blue-primary);
+      background: none; border: none; cursor: pointer;
+      padding: 0; margin-bottom: 28px;
+      font-family: 'Inter', sans-serif; transition: color var(--transition);
+    }
+    .blog-back-btn:hover { color: var(--blue-dark); }
+
+    .article-content h2 {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 800; color: var(--blue-primary);
+      line-height: 1.3; margin-bottom: 16px; letter-spacing: -0.02em;
+    }
+
+    .blog-article-meta {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 32px; flex-wrap: wrap;
+    }
+
+    .article-content h3 {
+      font-size: 1.2rem; font-weight: 700; color: var(--blue-dark);
+      margin-top: 36px; margin-bottom: 14px;
+    }
+
+    .article-content p {
+      font-size: 0.98rem; color: var(--text-primary);
+      line-height: 1.9; margin-bottom: 18px;
+    }
+
+    .article-content ul {
+      list-style: none; margin-bottom: 18px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .article-content ul li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;
+    }
+
+    .article-content ul li::before {
+      content: ''; width: 8px; height: 8px;
+      background: var(--blue-primary); border-radius: 50%;
+      flex-shrink: 0; margin-top: 7px;
+    }
+
+    .article-content img {
+      width: 100%; border-radius: var(--radius-md);
+      margin: 24px 0; box-shadow: var(--shadow-md);
+    }
+
+    .stat-callout {
+      background: var(--blue-light);
+      border-left: 4px solid var(--blue-primary);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 20px 24px; margin: 24px 0;
+    }
+    .stat-callout p { font-size: 0.93rem; color: var(--blue-dark); font-weight: 500; margin-bottom: 0; line-height: 1.7; }
+
+    /* Loading state */
+    .blog-loading {
+      text-align: center; padding: 80px 0;
+    }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--blue-light);
+      border-top-color: var(--blue-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .blog-loading p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .blog-empty {
+      text-align: center; padding: 80px 0;
+    }
+    .blog-empty p { color: var(--text-muted); font-size: 1rem; }
+
+    /* ================================================================
+       FOOTER (shared with index.html)
+       ================================================================ */
+    .footer {
+      background: linear-gradient(135deg, #001F5B 0%, #0033A0 100%);
+      padding: 40px 0;
+      text-align: center;
+    }
+    .footer-brand { color: rgba(255,255,255,0.8); font-size: 0.95rem; font-weight: 600; margin-bottom: 16px; }
+    .footer-linkedin {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.7); font-size: 0.88rem; font-weight: 500;
+      transition: color var(--transition);
+    }
+    .footer-linkedin:hover { color: var(--white); }
+    .footer-linkedin svg { width: 20px; height: 20px; }
+    .footer-disclaimer {
+      max-width: 700px; margin: 20px auto 0; font-size: 0.75rem;
+      color: rgba(255,255,255,0.4); line-height: 1.6;
+    }
+    .footer-copyright { margin-top: 12px; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .navbar-links {
+        position: fixed; top: 72px; left: 0; right: 0;
+        background: var(--white); flex-direction: column; gap: 0;
+        padding: 0; border-bottom: 2px solid var(--blue-primary);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-100%); opacity: 0; pointer-events: none;
+        transition: transform var(--transition), opacity var(--transition);
+      }
+      .navbar-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      .navbar-links li { width: 100%; }
+      .navbar-links a { display: block; padding: 16px 24px; border-bottom: 1px solid var(--blue-light); font-size: 1rem; }
+      .navbar-links a::after { display: none; }
+
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-hero { padding: 48px 0 32px; }
+      .blog-article-container { padding: 0 8px; }
+    }
+
+    @media (max-width: 1024px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+    }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">Nikita Naidoo</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#products">Products</a></li>
+        <li><a href="index.html#calculator">Calculator</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="index.html#faqs">FAQs</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="blog-page">
+    <!-- ============================================================
+         BLOG HERO
+         ============================================================ -->
+    <div class="blog-hero">
+      <div class="container">
+        <h1>Financial Insights</h1>
+        <p>Expert articles on retirement planning, tax-free investments, and protecting your business.</p>
+        <div class="blog-filters" id="blogFilters">
+          <button class="filter-btn active" data-category="all">All</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         BLOG LISTING
+         ============================================================ -->
+    <div class="blog-listing" id="blogListing">
+      <div class="container">
+        <div class="blog-loading" id="blogLoading">
+          <div class="spinner"></div>
+          <p>Loading articles...</p>
+        </div>
+
+        <div class="blog-grid" id="blogGrid" style="display:none;"></div>
+
+        <div class="blog-empty" id="blogEmpty" style="display:none;">
+          <p>No articles found. Check back soon for new financial insights.</p>
+        </div>
+
+        <div class="blog-pagination" id="blogPagination" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         ARTICLE FULL VIEW
+         ============================================================ -->
+    <div class="blog-article-page" id="articlePage">
+      <div class="container">
+        <div class="blog-article-container">
+          <button class="blog-back-btn" id="articleBackBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Articles
+          </button>
+          <div class="article-content" id="articleContent">
+            <div class="blog-loading">
+              <div class="spinner"></div>
+              <p>Loading article...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-brand">Nikita Naidoo &nbsp;|&nbsp; Sanlam Financial Adviser</p>
+      <a href="https://linkedin.com/in/nikita-t-naidoo-1b14a5123" target="_blank" rel="noopener noreferrer"
+        class="footer-linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+        Connect on LinkedIn
+      </a>
+      <p class="footer-disclaimer">Nikita Naidoo is an authorised Financial Services Provider representative of Sanlam Life Insurance Ltd. This website is for informational purposes only and does not constitute financial advice as defined in the Financial Advisory and Intermediary Services Act (FAIS Act, Act 37 of 2002).</p>
+      <p class="footer-copyright">&copy; 2026 Nikita Naidoo. All rights reserved. | <a href="https://nikitatrusha.co.za" style="color:rgba(255,255,255,0.5);">nikitatrusha.co.za</a></p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    /* ================================================================
+       CMS Configuration
+       ================================================================ */
+    const CMS_CONFIG = {
+      apiUrl: '',   // e.g. 'https://nikita-trusha-cms.vercel.app'
+      apiKey: '',   // The PUBLIC_API_KEY from CMS .env
+    };
+
+    /* ================================================================
+       Static Fallback Articles (shown when CMS not configured)
+       ================================================================ */
+    const STATIC_ARTICLES = [
+      {
+        slug: 'your-business-is-not-your-retirement-plan',
+        title: 'Your Business is NOT Your Retirement Plan',
+        excerpt: 'Less than 6% of South Africans retire comfortably. Business owners are statistically worse off. Here are 5 moves every business owner should make now.',
+        category: { name: 'Retirement Planning', slug: 'retirement-planning' },
+        reading_time: 8,
+        published_at: '2026-03-04',
+        content_html: null,
+      },
+      {
+        slug: 'complete-guide-tax-free-savings-2026',
+        title: 'The Complete Guide to Tax-Free Savings in 2026',
+        excerpt: 'The TFSA annual limit just increased to R46,000. Here is everything you need to know to maximise your tax-free investment.',
+        category: { name: 'Tax-Free Investments', slug: 'tax-free-investments' },
+        reading_time: 7,
+        published_at: '2026-03-04',
+        content_html: null,
+      },
+      {
+        slug: 'what-happens-to-your-business',
+        title: 'What Happens to Your Business If Something Happens to You?',
+        excerpt: 'Most business owners have personal life cover but none of the business-specific protection that saves their company. Here is what you need.',
+        category: { name: 'Business Protection', slug: 'business-protection' },
+        reading_time: 9,
+        published_at: '2026-03-04',
+        content_html: null,
+      },
+    ];
+
+    /* ================================================================
+       State
+       ================================================================ */
+    const BLOG_STATE = {
+      posts: [],
+      categories: [],
+      currentPage: 1,
+      totalPages: 1,
+      activeCategory: 'all',
+      isLoaded: false,
+    };
+
+    /* ================================================================
+       Initialization
+       ================================================================ */
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Navbar scroll
+      window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+      });
+
+      // Mobile menu
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('open');
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('open');
+        });
+      });
+
+      // Scroll reveal
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      // Back button
+      document.getElementById('articleBackBtn').addEventListener('click', showListing);
+
+      // Handle hash-based article links
+      if (window.location.hash.startsWith('#article-')) {
+        const num = parseInt(window.location.hash.replace('#article-', ''));
+        if (!isNaN(num) && num >= 1 && num <= 3 && !CMS_CONFIG.apiUrl) {
+          // Show static article
+          showStaticArticle(num - 1);
+          return;
+        }
+      }
+
+      // Load blog posts
+      if (CMS_CONFIG.apiUrl) {
+        await loadCategories();
+        await loadPosts(1);
+      } else {
+        showStaticPosts();
+      }
+    });
+
+    /* ================================================================
+       CMS API Functions
+       ================================================================ */
+    async function loadCategories() {
+      try {
+        const res = await fetch(CMS_CONFIG.apiUrl + '/api/v1/categories', {
+          headers: { 'x-api-key': CMS_CONFIG.apiKey },
+        });
+        const data = await res.json();
+        BLOG_STATE.categories = data || [];
+        renderFilters();
+      } catch (e) { /* fallback: no filters */ }
+    }
+
+    function renderFilters() {
+      const container = document.getElementById('blogFilters');
+      while (container.firstChild) container.removeChild(container.firstChild);
+
+      const allBtn = document.createElement('button');
+      allBtn.className = 'filter-btn active';
+      allBtn.dataset.category = 'all';
+      allBtn.textContent = 'All';
+      allBtn.addEventListener('click', () => filterByCategory('all'));
+      container.appendChild(allBtn);
+
+      BLOG_STATE.categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.category = cat.slug;
+        btn.textContent = cat.name;
+        btn.addEventListener('click', () => filterByCategory(cat.slug));
+        container.appendChild(btn);
+      });
+    }
+
+    async function filterByCategory(slug) {
+      BLOG_STATE.activeCategory = slug;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.category === slug);
+      });
+      await loadPosts(1);
+    }
+
+    async function loadPosts(page) {
+      const loading = document.getElementById('blogLoading');
+      const grid = document.getElementById('blogGrid');
+      const empty = document.getElementById('blogEmpty');
+      const pagination = document.getElementById('blogPagination');
+
+      loading.style.display = '';
+      grid.style.display = 'none';
+      empty.style.display = 'none';
+      pagination.style.display = 'none';
+
+      try {
+        let url = CMS_CONFIG.apiUrl + '/api/v1/posts?page=' + page + '&limit=9';
+        if (BLOG_STATE.activeCategory !== 'all') {
+          url += '&category=' + BLOG_STATE.activeCategory;
+        }
+
+        const res = await fetch(url, {
+          headers: { 'x-api-key': CMS_CONFIG.apiKey },
+        });
+        const data = await res.json();
+
+        loading.style.display = 'none';
+        BLOG_STATE.posts = data.posts || [];
+        BLOG_STATE.currentPage = data.pagination?.page || 1;
+        BLOG_STATE.totalPages = data.pagination?.totalPages || 1;
+        BLOG_STATE.isLoaded = true;
+
+        if (BLOG_STATE.posts.length === 0) {
+          empty.style.display = '';
+          return;
+        }
+
+        renderPostCards();
+        renderPagination();
+      } catch (e) {
+        loading.style.display = 'none';
+        showStaticPosts();
+      }
+    }
+
+    function renderPostCards() {
+      const grid = document.getElementById('blogGrid');
+      while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+      BLOG_STATE.posts.forEach(post => {
+        const card = createPostCard(post);
+        grid.appendChild(card);
+      });
+
+      grid.style.display = '';
+    }
+
+    function createPostCard(post) {
+      const card = document.createElement('div');
+      card.className = 'blog-card reveal visible';
+
+      const imageDiv = document.createElement('div');
+      imageDiv.className = 'blog-card-image';
+      if (post.cover_image_url) {
+        const img = document.createElement('img');
+        img.src = post.cover_image_url;
+        img.alt = post.title;
+        img.loading = 'lazy';
+        imageDiv.appendChild(img);
+      } else {
+        imageDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>';
+      }
+      card.appendChild(imageDiv);
+
+      const body = document.createElement('div');
+      body.className = 'blog-card-body';
+
+      if (post.category) {
+        const cat = document.createElement('span');
+        cat.className = 'blog-category';
+        cat.textContent = post.category.name || '';
+        body.appendChild(cat);
+      }
+
+      const h3 = document.createElement('h3');
+      h3.textContent = post.title;
+      body.appendChild(h3);
+
+      const p = document.createElement('p');
+      p.textContent = post.excerpt || '';
+      body.appendChild(p);
+
+      const meta = document.createElement('div');
+      meta.className = 'blog-card-meta';
+
+      const readTime = document.createElement('span');
+      readTime.className = 'blog-read-time';
+      readTime.textContent = (post.reading_time || 5) + ' min read';
+      meta.appendChild(readTime);
+
+      const readBtn = document.createElement('button');
+      readBtn.className = 'blog-read-btn';
+      readBtn.textContent = 'Read Article \u2192';
+      readBtn.addEventListener('click', () => openArticle(post.slug));
+      meta.appendChild(readBtn);
+
+      body.appendChild(meta);
+      card.appendChild(body);
+
+      return card;
+    }
+
+    function renderPagination() {
+      const container = document.getElementById('blogPagination');
+      while (container.firstChild) container.removeChild(container.firstChild);
+
+      if (BLOG_STATE.totalPages <= 1) return;
+      container.style.display = '';
+
+      // Prev
+      const prev = document.createElement('button');
+      prev.className = 'page-btn';
+      prev.textContent = '\u2190 Prev';
+      prev.disabled = BLOG_STATE.currentPage <= 1;
+      prev.addEventListener('click', () => loadPosts(BLOG_STATE.currentPage - 1));
+      container.appendChild(prev);
+
+      // Page numbers
+      for (let i = 1; i <= BLOG_STATE.totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'page-btn' + (i === BLOG_STATE.currentPage ? ' active' : '');
+        btn.textContent = String(i);
+        btn.addEventListener('click', () => loadPosts(i));
+        container.appendChild(btn);
+      }
+
+      // Next
+      const next = document.createElement('button');
+      next.className = 'page-btn';
+      next.textContent = 'Next \u2192';
+      next.disabled = BLOG_STATE.currentPage >= BLOG_STATE.totalPages;
+      next.addEventListener('click', () => loadPosts(BLOG_STATE.currentPage + 1));
+      container.appendChild(next);
+    }
+
+    /* ================================================================
+       Article View
+       ================================================================ */
+    async function openArticle(slug) {
+      const listing = document.getElementById('blogListing');
+      const articlePage = document.getElementById('articlePage');
+      const content = document.getElementById('articleContent');
+
+      listing.style.display = 'none';
+      articlePage.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      content.innerHTML = '<div class="blog-loading"><div class="spinner"></div><p>Loading article...</p></div>';
+
+      if (!CMS_CONFIG.apiUrl) {
+        // Static fallback
+        const post = STATIC_ARTICLES.find(a => a.slug === slug);
+        if (post) {
+          content.innerHTML = '';
+          const h2 = document.createElement('h2');
+          h2.textContent = post.title;
+          content.appendChild(h2);
+          const meta = document.createElement('div');
+          meta.className = 'blog-article-meta';
+          const cat = document.createElement('span');
+          cat.className = 'blog-category';
+          cat.textContent = post.category.name;
+          meta.appendChild(cat);
+          const time = document.createElement('span');
+          time.className = 'blog-read-time';
+          time.textContent = post.reading_time + ' min read';
+          meta.appendChild(time);
+          content.appendChild(meta);
+          const p = document.createElement('p');
+          p.textContent = 'Full article content is available when the CMS is connected. Contact Nikita directly for more information.';
+          content.appendChild(p);
+        }
+        return;
+      }
+
+      try {
+        const res = await fetch(CMS_CONFIG.apiUrl + '/api/v1/posts/' + encodeURIComponent(slug), {
+          headers: { 'x-api-key': CMS_CONFIG.apiKey },
+        });
+        const data = await res.json();
+
+        if (!data.post) {
+          content.innerHTML = '';
+          const p = document.createElement('p');
+          p.textContent = 'Article not found.';
+          content.appendChild(p);
+          return;
+        }
+
+        const post = data.post;
+        content.innerHTML = '';
+
+        // Title
+        const h2 = document.createElement('h2');
+        h2.textContent = post.title;
+        content.appendChild(h2);
+
+        // Meta
+        const meta = document.createElement('div');
+        meta.className = 'blog-article-meta';
+        if (post.category) {
+          const cat = document.createElement('span');
+          cat.className = 'blog-category';
+          cat.textContent = post.category.name;
+          meta.appendChild(cat);
+        }
+        const readTime = document.createElement('span');
+        readTime.className = 'blog-read-time';
+        const pubDate = post.published_at ? new Date(post.published_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+        readTime.textContent = (post.reading_time || 5) + ' min read' + (pubDate ? ' \u00b7 ' + pubDate : '');
+        meta.appendChild(readTime);
+        content.appendChild(meta);
+
+        // Cover image
+        if (post.cover_image_url) {
+          const img = document.createElement('img');
+          img.src = post.cover_image_url;
+          img.alt = post.title;
+          content.appendChild(img);
+        }
+
+        // HTML content from CMS (TipTap rendered)
+        if (post.content_html) {
+          const articleBody = document.createElement('div');
+          articleBody.className = 'article-body';
+          // The CMS returns sanitised HTML via TipTap's generateHTML
+          articleBody.innerHTML = post.content_html;
+          content.appendChild(articleBody);
+        }
+
+        // Update URL
+        history.pushState(null, '', '#' + slug);
+
+        // Update page title
+        document.title = post.seo_title || post.title + ' | Nikita Naidoo';
+
+      } catch (e) {
+        content.innerHTML = '';
+        const p = document.createElement('p');
+        p.textContent = 'Unable to load article. Please try again.';
+        content.appendChild(p);
+      }
+    }
+
+    function showListing() {
+      document.getElementById('blogListing').style.display = '';
+      document.getElementById('articlePage').classList.remove('active');
+      history.pushState(null, '', 'blog.html');
+      document.title = 'Financial Insights Blog | Nikita Naidoo | Sanlam Financial Adviser';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ================================================================
+       Static Fallback (when CMS not configured)
+       ================================================================ */
+    function showStaticPosts() {
+      document.getElementById('blogLoading').style.display = 'none';
+      BLOG_STATE.posts = STATIC_ARTICLES;
+
+      // Set up basic filters
+      const filters = document.getElementById('blogFilters');
+      const cats = ['Retirement Planning', 'Tax-Free Investments', 'Business Protection'];
+      cats.forEach(name => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.category = name.toLowerCase().replace(/\s+/g, '-');
+        btn.textContent = name;
+        btn.addEventListener('click', () => {
+          const slug = btn.dataset.category;
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filtered = slug === 'all' ? STATIC_ARTICLES :
+            STATIC_ARTICLES.filter(a => a.category.slug === slug);
+          renderStaticCards(filtered);
+        });
+        filters.appendChild(btn);
+      });
+
+      // Add "All" click handler
+      const allBtn = filters.querySelector('[data-category="all"]');
+      if (allBtn) {
+        allBtn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          allBtn.classList.add('active');
+          renderStaticCards(STATIC_ARTICLES);
+        });
+      }
+
+      renderStaticCards(STATIC_ARTICLES);
+    }
+
+    function renderStaticCards(posts) {
+      const grid = document.getElementById('blogGrid');
+      while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+      const icons = [
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>',
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>',
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>',
+      ];
+
+      posts.forEach((post, i) => {
+        const card = document.createElement('div');
+        card.className = 'blog-card reveal visible';
+
+        const imageDiv = document.createElement('div');
+        imageDiv.className = 'blog-card-image';
+        imageDiv.innerHTML = icons[i % icons.length];
+        card.appendChild(imageDiv);
+
+        const body = document.createElement('div');
+        body.className = 'blog-card-body';
+
+        const cat = document.createElement('span');
+        cat.className = 'blog-category';
+        cat.textContent = post.category.name;
+        body.appendChild(cat);
+
+        const h3 = document.createElement('h3');
+        h3.textContent = post.title;
+        body.appendChild(h3);
+
+        const p = document.createElement('p');
+        p.textContent = post.excerpt;
+        body.appendChild(p);
+
+        const meta = document.createElement('div');
+        meta.className = 'blog-card-meta';
+        const time = document.createElement('span');
+        time.className = 'blog-read-time';
+        time.textContent = post.reading_time + ' min read';
+        meta.appendChild(time);
+        const btn = document.createElement('button');
+        btn.className = 'blog-read-btn';
+        btn.textContent = 'Read Article \u2192';
+        btn.addEventListener('click', () => openArticle(post.slug));
+        meta.appendChild(btn);
+        body.appendChild(meta);
+
+        card.appendChild(body);
+        grid.appendChild(card);
+      });
+
+      grid.style.display = '';
+    }
+
+    function showStaticArticle(index) {
+      if (index < 0 || index >= STATIC_ARTICLES.length) return;
+      document.getElementById('blogLoading').style.display = 'none';
+      document.getElementById('blogGrid').style.display = 'none';
+      openArticle(STATIC_ARTICLES[index].slug);
+    }
+
+    // Handle browser back button
+    window.addEventListener('popstate', () => {
+      if (!window.location.hash || window.location.hash === '#') {
+        showListing();
+      }
+    });
+  </script>
+</body>
+</html>
