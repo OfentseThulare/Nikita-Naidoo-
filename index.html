@@ -10,6 +10,13 @@
   <meta name="author" content="Nikita Naidoo" />
   <link rel="canonical" href="https://nikitatrusha.co.za" />
 
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Nikita Naidoo | Financial Adviser for Business Owners &amp; Professionals" />
@@ -29,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet" />
+    rel="stylesheet" crossorigin="anonymous" />
 
   <style>
     /* ================================================================
@@ -3236,19 +3243,19 @@
           <form id="contactForm" onsubmit="handleFormSubmit(event)">
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="Your full name" required />
+              <input type="text" id="name" name="name" placeholder="Your full name" required maxlength="100" minlength="2" autocomplete="name" />
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+              <input type="email" id="email" name="email" placeholder="you@example.com" required maxlength="254" autocomplete="email" />
             </div>
             <div class="form-group">
               <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="+27 XX XXX XXXX" />
+              <input type="tel" id="phone" name="phone" placeholder="+27 XX XXX XXXX" maxlength="20" pattern="[0-9+\s\-\(\)]+" autocomplete="tel" />
             </div>
             <div class="form-group">
               <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="How can I help you?" required></textarea>
+              <textarea id="message" name="message" placeholder="How can I help you?" required maxlength="5000"></textarea>
             </div>
             <button type="submit" class="form-submit">Book Your Free Consultation</button>
           </form>
@@ -3326,29 +3333,38 @@
     const fmtR = v => ZAR.format(Math.abs(v));
     const fmtPct = v => (v * 100).toFixed(1) + '%';
 
+    // ---- Secure input helper: clamp + NaN guard ----
+    function safeNum(id, min, max, fallback) {
+      const raw = parseFloat(document.getElementById(id).value);
+      if (isNaN(raw) || !isFinite(raw)) return fallback;
+      return Math.min(Math.max(raw, min), max);
+    }
+
     // ---- Main calculation & render ----
     function runCalculator() {
-      const currentAge     = +document.getElementById('c-currentAge').value   || 35;
-      const retirementAge  = +document.getElementById('c-retirementAge').value || 65;
-      const lifeExpectancy = +document.getElementById('c-lifeExpectancy').value || 90;
+      const currentAge     = safeNum('c-currentAge', 18, 80, 35);
+      const retirementAge  = safeNum('c-retirementAge', 45, 80, 65);
+      const lifeExpectancy = safeNum('c-lifeExpectancy', 60, 110, 90);
       const ageCategory    = document.getElementById('c-ageCategory').value;
-      const grossIncome    = +document.getElementById('c-grossIncome').value   || 0;
-      const salEsc         = +document.getElementById('c-salEsc').value / 100;
-      const currentBalance = +document.getElementById('c-currentBalance').value || 0;
-      const monthlyRA      = +document.getElementById('c-monthlyRA').value     || 0;
-      const monthlyEmp     = +document.getElementById('c-monthlyEmployer').value || 0;
-      const tfsaBalance    = +document.getElementById('c-tfsaBalance').value   || 0;
-      const monthlyTFSA    = +document.getElementById('c-monthlyTFSA').value   || 0;
-      const inflation      = +document.getElementById('c-inflation').value / 100;
-      const replRatio      = +document.getElementById('c-replRatio').value / 100;
-      const drawdown       = +document.getElementById('c-drawdown').value / 100;
-      const ter            = +document.getElementById('c-ter').value / 100;
-      const showNominal    = document.getElementById('c-showNominal').checked;
+      const grossIncome    = safeNum('c-grossIncome', 0, 100000000, 0);
+      const salEsc         = safeNum('c-salEsc', 0, 15, 5) / 100;
+      const currentBalance = safeNum('c-currentBalance', 0, 100000000, 0);
+      const monthlyRA      = safeNum('c-monthlyRA', 0, 500000, 0);
+      const monthlyEmp     = safeNum('c-monthlyEmployer', 0, 500000, 0);
+      const tfsaBalance    = safeNum('c-tfsaBalance', 0, 500000, 0);
+      const monthlyTFSA    = safeNum('c-monthlyTFSA', 0, 3833, 0);
+      const inflation      = safeNum('c-inflation', 0, 20, 5.5) / 100;
+      const replRatio      = safeNum('c-replRatio', 10, 100, 75) / 100;
+      const drawdown       = safeNum('c-drawdown', 1, 20, 4) / 100;
+      const ter            = safeNum('c-ter', 0, 5, 1.5) / 100;
+      const showNominal    = !!document.getElementById('c-showNominal').checked;
 
       const portfolioSel   = document.getElementById('c-portfolioType').value;
-      const grossReturnPct = portfolioSel === 'custom'
-        ? +document.getElementById('c-customReturn').value / 100
-        : +portfolioSel / 100;
+      const allowedPortfolios = ['7.5', '10', '11.5', 'custom'];
+      const safePortfolio  = allowedPortfolios.includes(portfolioSel) ? portfolioSel : '10';
+      const grossReturnPct = safePortfolio === 'custom'
+        ? safeNum('c-customReturn', 1, 25, 10) / 100
+        : parseFloat(safePortfolio) / 100;
       const annualReturn   = grossReturnPct - ter; // net-of-fees return
 
       const yearsToRet  = Math.max(1, retirementAge - currentAge);
@@ -3477,9 +3493,9 @@
       setText('r-tfsaAnnual',    fmtR(tfsaAnnual) + '/year' + (tfsaAnnual > 46000 ? ' ⚠ exceeds R46,000 limit' : ''));
       setText('r-tfsaRemaining', fmtR(tfsaRemaining) + ' lifetime limit remaining');
 
-      // ---- Year-by-year table ----
+      // ---- Year-by-year table (safe DOM construction — no innerHTML) ----
       const tbody = document.getElementById('proj-tbody');
-      tbody.innerHTML = '';
+      while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
       rows.forEach(r => {
         const nominal = showNominal;
         const rf  = nominal ? r.retireNominal   : r.retireReal;
@@ -3488,13 +3504,19 @@
         const ac  = nominal ? r.annualContrib     : r.annualContrib / Math.pow(1 + inflation, r.yr);
         const tr  = document.createElement('tr');
         if (r.isRetirementYear) tr.className = 'retirement-row';
-        tr.innerHTML = `
-          <td>${r.age}${r.isRetirementYear ? ' ★' : ''}</td>
-          <td>${r.yr}</td>
-          <td>${fmtR(ac)}</td>
-          <td>${fmtR(rf)}</td>
-          <td>${fmtR(tf)}</td>
-          <td>${fmtR(cf)}</td>`;
+        const cellData = [
+          r.age + (r.isRetirementYear ? ' \u2605' : ''),
+          r.yr,
+          fmtR(ac),
+          fmtR(rf),
+          fmtR(tf),
+          fmtR(cf)
+        ];
+        cellData.forEach(text => {
+          const td = document.createElement('td');
+          td.textContent = String(text);
+          tr.appendChild(td);
+        });
         tbody.appendChild(tr);
       });
     }
@@ -3596,12 +3618,17 @@
        Blog — Article Open/Close
        --------------------------------------------------------------- */
     function openArticle(num) {
+      // Whitelist valid article IDs to prevent DOM injection
+      const validArticles = [1, 2, 3];
+      const safeNum = parseInt(num, 10);
+      if (!validArticles.includes(safeNum)) return;
+
       document.getElementById('blogGrid').style.display = 'none';
       document.querySelectorAll('.blog-article-full').forEach(a => a.classList.remove('active'));
-      const article = document.getElementById('article-' + num);
+      const article = document.getElementById('article-' + safeNum);
       if (article) {
         article.classList.add('active');
-        history.pushState(null, '', '#blog/article-' + num);
+        history.pushState(null, '', '#blog/article-' + safeNum);
         document.getElementById('blog').scrollIntoView({ behavior: 'smooth' });
       }
     }
@@ -3641,12 +3668,26 @@
     function handleFormSubmit(e) {
       e.preventDefault();
       const form = e.target;
-      const name = form.name.value;
-      const email = form.email.value;
-      const phone = form.phone.value;
-      const message = form.message.value;
 
-      // Compose mailto link with form data
+      // Sanitise inputs: strip CRLF to prevent mailto header injection,
+      // trim whitespace, and enforce length limits
+      const sanitise = (str, maxLen) => {
+        if (typeof str !== 'string') return '';
+        return str.replace(/[\r\n\t]/g, ' ').trim().slice(0, maxLen);
+      };
+
+      const name    = sanitise(form.name.value, 100);
+      const email   = sanitise(form.email.value, 254);
+      const phone   = sanitise(form.phone.value, 20);
+      const message = sanitise(form.message.value, 5000);
+
+      // Validate required fields client-side (defence in depth)
+      if (!name || name.length < 2) { alert('Please enter your name.'); return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return; }
+      if (phone && !/^[0-9+\s\-()]+$/.test(phone)) { alert('Please enter a valid phone number.'); return; }
+      if (!message || message.length < 5) { alert('Please enter a message.'); return; }
+
+      // Compose mailto link with sanitised data
       const subject = encodeURIComponent('Enquiry from ' + name);
       const body = encodeURIComponent(
         'Name: ' + name + '\n' +
