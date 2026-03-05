@@ -12,7 +12,7 @@
 
   <!-- Security Headers -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; media-src https://res.cloudinary.com; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
@@ -2476,11 +2476,11 @@
         retirement annuities, tax-free investments, and comprehensive life cover.
         Expert advice — free, with no obligation.</p>
       <div class="hero-cta">
-        <a href="mailto:nikita.naidoo@sanlam4u.co.za" class="btn btn-primary">
+        <a href="#contact" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('contact').scrollIntoView({behavior:'smooth'});">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="16" rx="2" />
-            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8" />
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <path d="M8 2v4M16 2v4M3 10h18" />
           </svg>
           Book a Consultation
         </a>
@@ -2600,15 +2600,17 @@
       <div class="meet-nikita-wrapper reveal">
         <div class="meet-nikita-video">
           <div class="video-wrapper">
-            <div class="video-placeholder" id="introVideo">
-              <div class="video-placeholder-content">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polygon points="10 8 16 12 10 16 10 8"/>
-                </svg>
-                <p>Introduction video coming soon</p>
-              </div>
-            </div>
+            <video
+              id="introVideo"
+              controls
+              preload="metadata"
+              playsinline
+              poster=""
+              style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"
+            >
+              <source src="https://res.cloudinary.com/dpurhn3pn/video/upload/v1772725215/WhatsApp_Video_2026-03-03_at_11.53.15_jgkpqw.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
         <div class="meet-nikita-cta">
@@ -3721,8 +3723,19 @@
                 <input type="tel" id="bookPhone" name="phone" placeholder="+27 XX XXX XXXX" maxlength="20" pattern="[0-9+\s\-\(\)]+" autocomplete="tel" />
               </div>
               <div class="form-group">
-                <label for="bookNotes">What would you like to discuss?</label>
-                <textarea id="bookNotes" name="notes" placeholder="E.g. retirement planning, tax-free investments, life cover..." maxlength="1000"></textarea>
+                <label for="bookInquiry">What are you looking for? *</label>
+                <select id="bookInquiry" name="inquiry_type" required style="width:100%;padding:12px 16px;border:1.5px solid #d1d5db;border-radius:8px;font-size:0.95rem;font-family:inherit;background:#fff;color:#374151;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236b7280%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 16px center;">
+                  <option value="" disabled selected>Select an inquiry type...</option>
+                  <option value="Investment Planning">Investment Planning</option>
+                  <option value="Life Cover &amp; Risk Protection">Life Cover &amp; Risk Protection</option>
+                  <option value="Financial Needs Analysis">Financial Needs Analysis</option>
+                  <option value="Long-Term Wealth Building">Long-Term Wealth Building</option>
+                  <option value="Not sure, just looking for advice">Not sure, just looking for advice</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bookNotes">Any additional notes?</label>
+                <textarea id="bookNotes" name="notes" placeholder="Anything else you'd like Nikita to know before the consultation..." maxlength="1000"></textarea>
               </div>
               <button type="submit" class="form-submit" id="bookSubmitBtn">Confirm Booking</button>
             </form>
@@ -3737,13 +3750,9 @@
                   <polyline points="22 4 12 14.01 9 11.01"/>
                 </svg>
               </div>
-              <h3>Booking Confirmed!</h3>
-              <p>Your free consultation has been booked. You'll receive a confirmation email shortly.</p>
+              <h3>Booking Sent!</h3>
+              <p>Thank you, your booking has been sent. You will receive a confirmation from Nikita shortly.</p>
               <div class="confirmation-details" id="confirmationDetails"></div>
-              <div class="confirmation-meet hidden" id="confirmationMeet">
-                <p>A Google Meet link has been created for your consultation:</p>
-                <a href="#" id="meetLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Join Google Meet</a>
-              </div>
               <button class="btn btn-primary" onclick="resetBookingFlow()" style="margin-top:24px;">Book Another Consultation</button>
             </div>
           </div>
@@ -4152,9 +4161,8 @@
        CMS Configuration
        --------------------------------------------------------------- */
     const CMS_CONFIG = {
-      // Set these when the CMS is deployed
-      apiUrl: '',   // e.g. 'https://nikita-trusha-cms.vercel.app'
-      apiKey: '',   // The PUBLIC_API_KEY from CMS .env
+      apiUrl: 'https://nikita-trusha-cms.vercel.app',
+      apiKey: '9e1658ac-cfbb-42c3-8131-08d2fff09a0c',
     };
 
     /* ---------------------------------------------------------------
@@ -4348,11 +4356,13 @@
       const name = sanitise(document.getElementById('bookName').value, 100);
       const email = sanitise(document.getElementById('bookEmail').value, 254);
       const phone = sanitise(document.getElementById('bookPhone').value, 20);
+      const inquiryType = document.getElementById('bookInquiry').value;
       const notes = sanitise(document.getElementById('bookNotes').value, 1000);
 
       if (!name || name.length < 2) { alert('Please enter your name.'); return; }
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email.'); return; }
       if (phone && !/^[0-9+\s\-()]+$/.test(phone)) { alert('Please enter a valid phone number.'); return; }
+      if (!inquiryType) { alert('Please select an inquiry type.'); return; }
 
       const dateStr = BOOKING_STATE.selectedDate.getFullYear() + '-' +
         String(BOOKING_STATE.selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
@@ -4376,6 +4386,7 @@
             date: dateStr,
             start_time: BOOKING_STATE.selectedSlot.start,
             end_time: BOOKING_STATE.selectedSlot.end,
+            inquiry_type: inquiryType || null,
             notes: notes || null,
           }),
         });
@@ -4405,12 +4416,6 @@
         details.appendChild(nameText);
         details.appendChild(emailText);
 
-        if (data.meet_link) {
-          const meetSection = document.getElementById('confirmationMeet');
-          meetSection.classList.remove('hidden');
-          document.getElementById('meetLink').href = data.meet_link;
-        }
-
         goToStep(4);
       } catch (err) {
         alert(err.message || 'Something went wrong. Please try again or contact us directly.');
@@ -4428,7 +4433,6 @@
       BOOKING_STATE.currentYear = new Date().getFullYear();
 
       document.getElementById('bookingForm').reset();
-      document.getElementById('confirmationMeet').classList.add('hidden');
       renderCalendar();
       goToStep(1);
     }
