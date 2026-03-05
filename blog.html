@@ -328,6 +328,29 @@
     }
     .stat-callout p { font-size: 0.93rem; color: var(--blue-dark); font-weight: 500; margin-bottom: 0; line-height: 1.7; }
 
+    /* Article body (CMS TipTap-rendered HTML) */
+    .article-body h1 { font-size: 1.6rem; font-weight: 800; color: var(--blue-primary); margin-top: 32px; margin-bottom: 14px; }
+    .article-body h2 { font-size: 1.3rem; font-weight: 700; color: var(--blue-dark); margin-top: 32px; margin-bottom: 14px; }
+    .article-body h3 { font-size: 1.1rem; font-weight: 700; color: var(--blue-dark); margin-top: 28px; margin-bottom: 12px; }
+    .article-body p { font-size: 0.98rem; color: var(--text-primary); line-height: 1.9; margin-bottom: 18px; }
+    .article-body ul, .article-body ol { margin-bottom: 18px; padding-left: 24px; display: flex; flex-direction: column; gap: 8px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+    .article-body strong { font-weight: 700; color: var(--text-primary); }
+    .article-body em { font-style: italic; }
+    .article-body u { text-decoration: underline; }
+    .article-body a { color: var(--blue-primary); text-decoration: underline; transition: color var(--transition); }
+    .article-body a:hover { color: var(--blue-dark); }
+    .article-body blockquote {
+      background: var(--blue-light); border-left: 4px solid var(--blue-primary);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 20px 24px; margin: 24px 0; font-style: italic;
+    }
+    .article-body blockquote p { color: var(--blue-dark); font-weight: 500; margin-bottom: 0; }
+    .article-body img { width: 100%; border-radius: var(--radius-md); margin: 24px 0; box-shadow: var(--shadow-md); }
+    .article-body pre { background: #f5f5f5; border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0; overflow-x: auto; }
+    .article-body code { font-family: 'Fira Code', monospace; font-size: 0.88rem; }
+    .article-body hr { border: none; height: 1px; background: #e0e0e0; margin: 32px 0; }
+
     /* Loading state */
     .blog-loading {
       text-align: center; padding: 80px 0;
@@ -515,8 +538,8 @@
        CMS Configuration
        ================================================================ */
     const CMS_CONFIG = {
-      apiUrl: '',   // e.g. 'https://nikita-trusha-cms.vercel.app'
-      apiKey: '',   // The PUBLIC_API_KEY from CMS .env
+      apiUrl: 'https://nikita-trusha-cms.vercel.app',
+      apiKey: '9e1658ac-cfbb-42c3-8131-08d2fff09a0c',
     };
 
     /* ================================================================
@@ -596,21 +619,25 @@
       // Back button
       document.getElementById('articleBackBtn').addEventListener('click', showListing);
 
-      // Handle hash-based article links
-      if (window.location.hash.startsWith('#article-')) {
-        const num = parseInt(window.location.hash.replace('#article-', ''));
-        if (!isNaN(num) && num >= 1 && num <= 3 && !CMS_CONFIG.apiUrl) {
-          // Show static article
-          showStaticArticle(num - 1);
-          return;
-        }
-      }
-
       // Load blog posts
       if (CMS_CONFIG.apiUrl) {
         await loadCategories();
         await loadPosts(1);
+
+        // Handle hash-based article deep links (e.g. blog.html#some-article-slug)
+        if (window.location.hash && window.location.hash.length > 1) {
+          const slug = window.location.hash.substring(1);
+          openArticle(slug);
+        }
       } else {
+        // Handle hash-based article links for static fallback
+        if (window.location.hash.startsWith('#article-')) {
+          const num = parseInt(window.location.hash.replace('#article-', ''));
+          if (!isNaN(num) && num >= 1 && num <= 3) {
+            showStaticArticle(num - 1);
+            return;
+          }
+        }
         showStaticPosts();
       }
     });
