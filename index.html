@@ -12,7 +12,7 @@
 
   <!-- Security Headers -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; media-src https://res.cloudinary.com; frame-src https://player.cloudinary.com; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; media-src https://res.cloudinary.com; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
@@ -2840,12 +2840,16 @@
       <div class="meet-nikita-wrapper reveal">
         <div class="meet-nikita-video">
           <div class="video-wrapper">
-            <iframe
-              src="https://player.cloudinary.com/embed/?cloud_name=dpurhn3pn&public_id=WhatsApp_Video_2026-03-03_at_11.53.15_jgkpqw"
-              style="width:100%;height:100%;border:none;border-radius:inherit;"
-              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            <video
+              controls
+              playsinline
+              preload="metadata"
+              poster=""
+              style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"
+            >
+              <source src="https://res.cloudinary.com/dpurhn3pn/video/upload/WhatsApp_Video_2026-03-03_at_11.53.15_jgkpqw.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
         <div class="meet-nikita-cta">
