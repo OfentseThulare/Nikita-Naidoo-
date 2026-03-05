@@ -12,7 +12,7 @@
 
   <!-- Security Headers -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; media-src https://res.cloudinary.com; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+    content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; media-src https://res.cloudinary.com; frame-src https://player.cloudinary.com; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
@@ -709,7 +709,8 @@
     }
 
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
       width: 100%;
       padding: 12px 16px;
       font-family: 'Inter', sans-serif;
@@ -722,8 +723,17 @@
       transition: border-color var(--transition), box-shadow var(--transition);
     }
 
+    .form-group select {
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236b7280%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
     .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group textarea:focus,
+    .form-group select:focus {
       border-color: var(--blue-primary);
       box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.1);
     }
@@ -832,11 +842,15 @@
     }
 
     /* ================================================================
-       RESPONSIVE — MOBILE
+       RESPONSIVE — TABLET
        ================================================================ */
     @media (max-width: 768px) {
       .section-padding {
         padding: 64px 0;
+      }
+
+      .section-subheading {
+        margin-bottom: 36px;
       }
 
       /* Navbar mobile */
@@ -859,6 +873,7 @@
         opacity: 0;
         pointer-events: none;
         transition: transform var(--transition), opacity var(--transition);
+        z-index: 999;
       }
 
       .navbar-links.open {
@@ -894,11 +909,12 @@
 
       .hero-cta {
         flex-direction: column;
+        align-items: center;
       }
 
       .hero-cta .btn {
         width: 100%;
-        max-width: 280px;
+        max-width: 300px;
       }
 
       /* About */
@@ -918,6 +934,14 @@
         gap: 16px;
       }
 
+      .about-content p {
+        text-align: left;
+      }
+
+      .about-credentials {
+        text-align: left;
+      }
+
       /* Services */
       .services-grid {
         grid-template-columns: 1fr;
@@ -926,6 +950,10 @@
       /* Testimonials */
       .testimonials-grid {
         grid-template-columns: 1fr;
+      }
+
+      .testimonial-card {
+        padding: 28px 24px 24px;
       }
 
       /* Contact */
@@ -937,11 +965,52 @@
       .contact-form {
         padding: 28px 24px;
       }
+
+      /* Footer */
+      .footer {
+        padding: 40px 0 28px;
+      }
+
+      .footer-disclaimer {
+        font-size: 0.72rem;
+        padding: 0 8px;
+      }
+
+      /* Meet Nikita video */
+      .meet-nikita-wrapper {
+        max-width: 100%;
+      }
+
+      .meet-nikita-cta p {
+        font-size: 0.95rem;
+      }
+
+      /* FAQ */
+      .faq-question {
+        font-size: 0.95rem;
+        padding: 16px 0;
+      }
     }
 
+    /* ================================================================
+       RESPONSIVE — SMALL MOBILE
+       ================================================================ */
     @media (max-width: 480px) {
       .container {
         padding: 0 16px;
+      }
+
+      .section-padding {
+        padding: 48px 0;
+      }
+
+      .section-heading {
+        font-size: 1.5rem;
+      }
+
+      .section-subheading {
+        font-size: 0.92rem;
+        margin-bottom: 28px;
       }
 
       .about-pillars {
@@ -949,8 +1018,121 @@
         gap: 20px;
       }
 
+      .hero {
+        padding: 100px 0 64px;
+      }
+
       .hero h1 {
-        font-size: 2rem;
+        font-size: 1.85rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.85rem;
+      }
+
+      .hero-description {
+        font-size: 0.92rem;
+      }
+
+      .hero-cta .btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+      }
+
+      /* Service cards tighter on small mobile */
+      .service-card {
+        padding: 28px 20px;
+      }
+
+      /* Product cards tighter */
+      .product-card {
+        padding: 28px 20px;
+      }
+
+      /* Testimonial cards */
+      .testimonial-card {
+        padding: 24px 18px 20px;
+      }
+
+      .testimonial-text {
+        font-size: 0.9rem;
+      }
+
+      /* Contact details */
+      .contact-detail {
+        gap: 12px;
+      }
+
+      .contact-detail-icon {
+        width: 38px;
+        height: 38px;
+      }
+
+      .contact-form {
+        padding: 24px 16px;
+      }
+
+      /* Footer */
+      .footer-brand {
+        font-size: 0.85rem;
+      }
+
+      .footer-disclaimer {
+        font-size: 0.7rem;
+        padding: 0 4px;
+      }
+
+      /* Blog cards */
+      .blog-card-body {
+        padding: 18px;
+      }
+
+      /* FAQ */
+      .faq-question {
+        font-size: 0.9rem;
+        gap: 12px;
+      }
+
+      /* Meet Nikita */
+      .video-wrapper {
+        border-radius: var(--radius-sm);
+      }
+
+      .meet-nikita-cta p {
+        font-size: 0.9rem;
+      }
+
+      .meet-nikita-cta .btn {
+        width: 100%;
+      }
+    }
+
+    /* ================================================================
+       RESPONSIVE — VERY SMALL SCREENS (320px)
+       ================================================================ */
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .hero h1 {
+        font-size: 1.65rem;
+      }
+
+      .hero-cta .btn {
+        max-width: 100%;
+      }
+
+      .navbar-brand {
+        font-size: 1.05rem;
+      }
+
+      .contact-form {
+        padding: 20px 12px;
+      }
+
+      .fee-transparency {
+        padding: 20px 16px;
       }
     }
 
@@ -1348,12 +1530,12 @@
     }
 
     @media (max-width: 360px) {
-      .container {
-        padding: 0 12px;
-      }
-
       .two-pot-row {
         grid-template-columns: 1fr;
+      }
+
+      .pot-tile-val {
+        font-size: 0.9rem;
       }
     }
 
@@ -1450,11 +1632,12 @@
     }
 
     .video-wrapper {
+      position: relative;
       aspect-ratio: 16 / 9;
       border-radius: var(--radius-md);
       overflow: hidden;
       box-shadow: var(--shadow-lg);
-      background: var(--blue-light);
+      background: #000;
     }
 
     .video-placeholder {
@@ -1858,9 +2041,56 @@
       .calendar-widget {
         padding: 16px;
       }
+    }
 
-      .meet-nikita-wrapper {
-        max-width: 100%;
+    @media (max-width: 480px) {
+      .booking-flow {
+        padding: 16px 12px;
+      }
+
+      .booking-steps {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .step-label {
+        display: none;
+      }
+
+      .booking-step + .booking-step::before {
+        width: 12px;
+      }
+
+      .step-number {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+      }
+
+      .calendar-widget {
+        padding: 12px;
+      }
+
+      .calendar-day {
+        font-size: 0.8rem;
+      }
+
+      .time-slots-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .time-slot-btn {
+        padding: 10px 6px;
+        font-size: 0.85rem;
+      }
+
+      .booking-selected-date {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .confirmation-details {
+        font-size: 0.85rem;
       }
     }
 
@@ -2338,6 +2568,16 @@
       .blog-article-full {
         padding: 20px 16px;
       }
+      .contact-cta {
+        padding: 24px 16px;
+        border-left: 3px solid var(--blue-primary);
+      }
+      .contact-cta h3 {
+        font-size: 1.25rem;
+      }
+      .contact-cta p {
+        font-size: 0.9rem;
+      }
     }
   </style>
 
@@ -2600,17 +2840,12 @@
       <div class="meet-nikita-wrapper reveal">
         <div class="meet-nikita-video">
           <div class="video-wrapper">
-            <video
-              id="introVideo"
-              controls
-              preload="metadata"
-              playsinline
-              poster=""
-              style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"
-            >
-              <source src="https://res.cloudinary.com/dpurhn3pn/video/upload/v1772725215/WhatsApp_Video_2026-03-03_at_11.53.15_jgkpqw.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <iframe
+              src="https://player.cloudinary.com/embed/?cloud_name=dpurhn3pn&public_id=WhatsApp_Video_2026-03-03_at_11.53.15_jgkpqw"
+              style="width:100%;height:100%;border:none;border-radius:inherit;"
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
         <div class="meet-nikita-cta">
@@ -3724,7 +3959,7 @@
               </div>
               <div class="form-group">
                 <label for="bookInquiry">What are you looking for? *</label>
-                <select id="bookInquiry" name="inquiry_type" required style="width:100%;padding:12px 16px;border:1.5px solid #d1d5db;border-radius:8px;font-size:0.95rem;font-family:inherit;background:#fff;color:#374151;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236b7280%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 16px center;">
+                <select id="bookInquiry" name="inquiry_type" required>
                   <option value="" disabled selected>Select an inquiry type...</option>
                   <option value="Investment Planning">Investment Planning</option>
                   <option value="Life Cover &amp; Risk Protection">Life Cover &amp; Risk Protection</option>
