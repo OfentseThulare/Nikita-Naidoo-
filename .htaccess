@@ -1,8 +1,0 @@
-# Override server-level CSP with full policy including Cloudinary
-<IfModule mod_headers.c>
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co https://res.cloudinary.com; media-src https://res.cloudinary.com; connect-src 'self' https://*.vercel.app https://*.nikitatrusha.co.za; frame-src https://player.cloudinary.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:;"
-  Header always set X-Content-Type-Options "nosniff"
-  Header always set X-Frame-Options "DENY"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
-</IfModule>
