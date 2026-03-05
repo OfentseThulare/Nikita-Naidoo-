@@ -54,6 +54,7 @@
       scroll-behavior: smooth;
       font-size: 16px;
       scroll-padding-top: 80px;
+      overflow-x: hidden;
     }
 
     body {
@@ -63,6 +64,7 @@
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     img {
@@ -3299,14 +3301,6 @@
             </div>
           </div>
 
-          <div class="calc-field">
-            <label>Annual Salary Escalation <span class="field-hint" id="lbl-salEsc">5.0%</span></label>
-            <div class="range-row">
-              <input type="range" id="c-salEsc" min="0" max="15" step="0.5" value="5" />
-              <span class="range-val" id="val-salEsc">5.0%</span>
-            </div>
-          </div>
-
           <div class="calc-group-title">Retirement Savings &amp; Contributions</div>
 
           <div class="calc-field">
@@ -3370,37 +3364,8 @@
             </div>
           </div>
 
-          <div class="calc-field">
-            <label>Long-Term Inflation Assumption <span class="field-hint" id="lbl-inflation">5.5%</span></label>
-            <div class="range-row">
-              <input type="range" id="c-inflation" min="3" max="9" step="0.5" value="5.5" />
-              <span class="range-val" id="val-inflation">5.5%</span>
-            </div>
-          </div>
-
-          <div class="calc-field">
-            <label>Target Income Replacement Ratio <span class="field-hint" id="lbl-replRatio">75%</span></label>
-            <div class="range-row">
-              <input type="range" id="c-replRatio" min="50" max="100" step="5" value="75" />
-              <span class="range-val" id="val-replRatio">75%</span>
-            </div>
-          </div>
-
-          <div class="calc-field">
-            <label>Drawdown Rate (Living Annuity) <span class="field-hint" id="lbl-drawdown">4.0%</span></label>
-            <div class="range-row">
-              <input type="range" id="c-drawdown" min="2.5" max="17.5" step="0.5" value="4" />
-              <span class="range-val" id="val-drawdown">4.0%</span>
-            </div>
-          </div>
-
-          <div class="calc-field">
-            <label>Total Expense Ratio (TER) <span class="field-hint" id="lbl-ter">1.5%</span></label>
-            <div class="range-row">
-              <input type="range" id="c-ter" min="0.5" max="3" step="0.25" value="1.5" />
-              <span class="range-val" id="val-ter">1.5%</span>
-            </div>
-          </div>
+          <!-- Advanced assumptions hidden — using sensible defaults:
+               Inflation 5.5%, Replacement Ratio 75%, Drawdown 4%, TER 1.5%, Salary Escalation 5% -->
 
         </div>
         <!-- /calc-inputs -->
@@ -4297,16 +4262,16 @@
       const lifeExpectancy = safeNum('c-lifeExpectancy', 60, 110, 90);
       const ageCategory    = document.getElementById('c-ageCategory').value;
       const grossIncome    = safeNum('c-grossIncome', 0, 100000000, 0);
-      const salEsc         = safeNum('c-salEsc', 0, 15, 5) / 100;
+      const salEsc         = 0.05;  // fixed 5% salary escalation
       const currentBalance = safeNum('c-currentBalance', 0, 100000000, 0);
       const monthlyRA      = safeNum('c-monthlyRA', 0, 500000, 0);
       const monthlyEmp     = safeNum('c-monthlyEmployer', 0, 500000, 0);
       const tfsaBalance    = safeNum('c-tfsaBalance', 0, 500000, 0);
       const monthlyTFSA    = safeNum('c-monthlyTFSA', 0, 3833, 0);
-      const inflation      = safeNum('c-inflation', 0, 20, 5.5) / 100;
-      const replRatio      = safeNum('c-replRatio', 10, 100, 75) / 100;
-      const drawdown       = safeNum('c-drawdown', 1, 20, 4) / 100;
-      const ter            = safeNum('c-ter', 0, 5, 1.5) / 100;
+      const inflation      = 0.055; // fixed 5.5% inflation
+      const replRatio      = 0.75;  // fixed 75% replacement ratio
+      const drawdown       = 0.04;  // fixed 4% drawdown rate
+      const ter            = 0.015; // fixed 1.5% TER
       const showNominal    = !!document.getElementById('c-showNominal').checked;
 
       const portfolioSel   = document.getElementById('c-portfolioType').value;
@@ -4481,8 +4446,7 @@
       const allInputs = document.querySelectorAll(
         '#c-currentAge, #c-retirementAge, #c-lifeExpectancy, #c-ageCategory, ' +
         '#c-grossIncome, #c-currentBalance, #c-monthlyRA, #c-monthlyEmployer, ' +
-        '#c-tfsaBalance, #c-monthlyTFSA, #c-inflation, #c-replRatio, ' +
-        '#c-drawdown, #c-ter, #c-portfolioType, #c-customReturn, #c-salEsc, ' +
+        '#c-tfsaBalance, #c-monthlyTFSA, #c-portfolioType, #c-customReturn, ' +
         '#c-showNominal'
       );
       allInputs.forEach(el => el.addEventListener('input', onCalcInput));
@@ -4491,11 +4455,6 @@
 
     function onCalcInput() {
       // Sync range display labels
-      syncRange('c-salEsc',      'val-salEsc',      v => v.toFixed(1) + '%');
-      syncRange('c-inflation',   'val-inflation',   v => v.toFixed(1) + '%');
-      syncRange('c-replRatio',   'val-replRatio',   v => v.toFixed(0) + '%');
-      syncRange('c-drawdown',    'val-drawdown',    v => v.toFixed(1) + '%');
-      syncRange('c-ter',         'val-ter',         v => v.toFixed(2) + '%');
       syncRange('c-customReturn','val-customReturn', v => v.toFixed(1) + '%');
 
       // Show/hide custom return field
