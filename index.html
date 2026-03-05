@@ -4326,6 +4326,17 @@
     });
 
     /* ---------------------------------------------------------------
+       Always start at top of page on fresh load
+       --------------------------------------------------------------- */
+    if (history.scrollRestoration) history.scrollRestoration = 'manual';
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+      window.scrollTo(0, 0);
+    });
+
+    /* ---------------------------------------------------------------
        Sticky Navbar — blue border on scroll
        --------------------------------------------------------------- */
     const navbar = document.getElementById('navbar');
