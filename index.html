@@ -1160,6 +1160,16 @@
       align-items: start;
     }
 
+    /* Results + Breakdown both in column 2 on desktop */
+    .calc-results {
+      grid-column: 2;
+    }
+
+    .calc-inputs {
+      grid-column: 1;
+      grid-row: 1 / 3; /* span both rows so sticky works */
+    }
+
     /* --- Inputs Panel --- */
     .calc-inputs {
       background: var(--white);
@@ -1522,7 +1532,18 @@
       .calc-layout {
         grid-template-columns: 1fr;
       }
-      .calc-inputs { position: static; max-height: none; }
+      .calc-inputs {
+        position: static;
+        max-height: none;
+        grid-column: 1;
+        grid-row: auto;
+      }
+      .calc-results {
+        grid-column: 1;
+      }
+      .calc-breakdown {
+        grid-column: 1;
+      }
     }
 
     /* Tablet — tighten spacing between 641px–1024px */
@@ -1553,184 +1574,399 @@
       }
     }
 
-    /* Mobile — stack and compress */
-    @media (max-width: 640px) {
-      .results-grid { grid-template-columns: 1fr; }
-      .two-pot-row  { grid-template-columns: 1fr; }
-      .field-row-2  { grid-template-columns: 1fr; }
+    /* Old mobile calc breakpoints replaced by tabbed UI system below */
 
+    /* ================================================================
+       MOBILE CALCULATOR — TABBED UI + ACCORDIONS
+       ================================================================ */
+
+    /* --- Tab bar (hidden on desktop) --- */
+    .calc-tabs {
+      display: none;
+    }
+
+    /* --- Desktop: breakdown flows under results, accordions invisible --- */
+    .calc-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      grid-column: 2; /* same column as results on desktop */
+    }
+
+    .calc-accordion-item {
+      display: contents; /* accordion wrapper invisible on desktop */
+    }
+
+    .calc-accordion-body {
+      display: block; /* always visible on desktop */
+    }
+
+    .calc-accordion-toggle {
+      display: none; /* hidden on desktop */
+    }
+
+    @media (max-width: 768px) {
+      /* Tab bar */
+      .calc-tabs {
+        display: flex;
+        gap: 0;
+        margin-bottom: 16px;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .calc-tab-btn {
+        flex: 1;
+        padding: 12px 8px;
+        border: none;
+        background: var(--white);
+        color: var(--text-muted);
+        font-family: inherit;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition: background var(--transition), color var(--transition);
+        min-height: 44px;
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      .calc-tab-btn.active {
+        background: var(--blue-primary);
+        color: #fff;
+      }
+
+      /* Hide inactive tab panels */
+      .calc-layout {
+        display: block !important;
+      }
+
+      .calc-inputs,
+      .calc-results,
+      .calc-breakdown {
+        display: none;
+      }
+
+      .calc-inputs.calc-panel-active,
+      .calc-results.calc-panel-active,
+      .calc-breakdown.calc-panel-active {
+        display: block;
+      }
+
+      /* Unstick inputs on mobile */
       .calc-inputs {
-        padding: 20px 16px;
+        position: static !important;
+        max-height: none !important;
       }
 
-      .results-panel {
-        padding: 16px;
+      /* Accordion items are real blocks on mobile */
+      .calc-accordion-item {
+        display: block;
       }
 
-      .fais-full {
-        padding: 16px;
-        font-size: 0.7rem;
+      .calc-accordion-body {
+        display: none; /* collapsed by default on mobile */
       }
 
-      .rc-value {
-        font-size: 1.2rem;
+      .calc-accordion-body.accordion-open {
+        display: block;
+      }
+
+      /* --- Accordion toggles for breakdown panels --- */
+      .calc-accordion-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 14px 16px;
+        border: none;
+        background: var(--white);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        font-family: inherit;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--blue-primary);
+        cursor: pointer;
+        min-height: 48px;
+        text-align: left;
+      }
+
+      .calc-accordion-toggle::after {
+        content: '\25BC';
+        font-size: 0.65rem;
+        transition: transform 0.2s ease;
+        margin-left: 8px;
+        flex-shrink: 0;
+      }
+
+      .calc-accordion-toggle.accordion-open::after {
+        transform: rotate(180deg);
+      }
+
+      /* Compact result cards on mobile — 2-col grid */
+      .results-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px;
+      }
+
+      .result-card {
+        padding: 12px !important;
       }
 
       .rc-label {
-        font-size: 0.68rem;
+        font-size: 0.62rem;
+        margin-bottom: 3px;
+      }
+
+      .rc-value {
+        font-size: 1.05rem !important;
+      }
+
+      .rc-value.small {
+        font-size: 0.92rem !important;
+      }
+
+      .rc-sub {
+        font-size: 0.65rem;
+        margin-top: 2px;
+      }
+
+      /* Compact input fields on mobile */
+      .calc-field input[type="number"],
+      .calc-field select {
+        padding: 10px 11px;
+        font-size: 1rem; /* 16px prevents iOS zoom */
+        min-height: 44px;
+      }
+
+      .prefix-wrap input {
+        padding-left: 24px !important;
+      }
+
+      .calc-field label {
+        font-size: 0.73rem;
       }
 
       .calc-group-title {
-        margin: 16px 0 12px;
+        margin: 14px 0 10px;
+        font-size: 0.68rem;
       }
 
       .calc-field {
         margin-bottom: 10px;
       }
 
-      .calc-field label {
-        font-size: 0.75rem;
-      }
-
-      .result-card {
-        padding: 14px 16px;
-      }
-
-      .proj-table {
-        min-width: 480px;
-        font-size: 0.72rem;
-      }
-
-      .proj-table th,
-      .proj-table td {
-        padding: 6px 8px;
-      }
-
-      .tax-row {
-        font-size: 0.78rem;
-      }
-
-      .tax-row.tr-highlight .tr-val {
-        font-size: 0.88rem;
-      }
-
-      .calc-results {
-        gap: 14px;
-      }
-
-      .nominal-toggle {
-        font-size: 0.75rem;
-      }
-    }
-
-    /* Small mobile */
-    @media (max-width: 480px) {
-      .calc-inputs {
-        padding: 18px 14px;
-      }
-
-      .results-panel {
-        padding: 14px;
-      }
-
-      .results-grid {
-        gap: 10px;
-      }
-
-      .two-pot-row {
+      .field-row-2 {
+        grid-template-columns: 1fr 1fr;
         gap: 8px;
       }
 
-      .pot-tile {
-        padding: 10px;
+      /* Breakdown panel spacing */
+      .calc-breakdown {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
       }
 
-      .calc-layout {
-        gap: 16px;
+      .calc-breakdown.calc-panel-active {
+        display: flex;
       }
 
-      .calc-results {
-        gap: 12px;
+      .calc-breakdown .results-panel {
+        padding: 14px;
+        margin-top: 0;
       }
-    }
 
-    /* Very small screens */
-    @media (max-width: 360px) {
+      .calc-breakdown .results-panel h4 {
+        display: none; /* replaced by accordion toggle */
+      }
+
+      /* Tighter tax rows */
+      .tax-row {
+        font-size: 0.75rem;
+        flex-wrap: wrap;
+        gap: 2px;
+      }
+
+      .tax-row .tr-label {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .tax-row .tr-val {
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .tax-row.tr-highlight {
+        padding: 8px 10px;
+      }
+
+      .tax-row.tr-highlight .tr-val {
+        font-size: 0.85rem;
+      }
+
+      /* Tighter two-pot */
       .two-pot-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 6px;
+      }
+
+      .pot-tile {
+        padding: 10px 6px;
+      }
+
+      .pot-tile-label {
+        font-size: 0.6rem;
       }
 
       .pot-tile-val {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
       }
 
-      .rc-value {
-        font-size: 1.05rem;
+      .pot-tile-sub {
+        font-size: 0.58rem;
       }
 
-      .rc-value.small {
-        font-size: 0.95rem;
-      }
-
-      .result-card {
-        padding: 12px;
-      }
-
-      .calc-inputs {
-        padding: 16px 12px;
-      }
-
-      .range-row .range-val {
-        min-width: 36px;
-        font-size: 0.78rem;
-      }
-
+      /* Year-by-year table mobile */
       .proj-table {
-        min-width: 420px;
-        font-size: 0.68rem;
+        min-width: 440px;
+        font-size: 0.7rem;
       }
 
       .proj-table th,
       .proj-table td {
-        padding: 5px 6px;
+        padding: 5px 7px;
       }
 
-      .two-pot-row {
-        gap: 6px;
-      }
-
-      .results-panel {
-        padding: 12px;
-      }
-
-      .results-panel h4 {
-        font-size: 0.8rem;
-        margin-bottom: 10px;
-      }
-
+      /* FAIS disclaimer compact */
       .fais-full {
-        padding: 12px;
-        font-size: 0.66rem;
+        padding: 14px;
+        font-size: 0.68rem;
       }
 
       .fais-full strong {
         font-size: 0.72rem;
       }
 
+      /* Info banner */
+      .calc-info-banner {
+        font-size: 0.68rem;
+        margin-top: 20px;
+      }
+
+      /* Nominal toggle */
       .nominal-toggle {
-        font-size: 0.7rem;
+        font-size: 0.72rem;
+      }
+    }
+
+    /* --- Small phones (≤480px) --- */
+    @media (max-width: 480px) {
+      .calc-tab-btn {
+        font-size: 0.72rem;
+        padding: 11px 6px;
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px;
+      }
+
+      .rc-value {
+        font-size: 0.95rem !important;
+      }
+
+      .rc-value.small {
+        font-size: 0.85rem !important;
+      }
+
+      .rc-label {
+        font-size: 0.58rem;
+      }
+
+      .rc-sub {
+        font-size: 0.6rem;
+      }
+
+      .result-card {
+        padding: 10px !important;
+      }
+
+      .field-row-2 {
+        grid-template-columns: 1fr !important;
+      }
+
+      .two-pot-row {
+        grid-template-columns: 1fr !important;
+      }
+
+      .calc-accordion-toggle {
+        font-size: 0.76rem;
+        padding: 12px 14px;
       }
 
       .tax-row {
+        font-size: 0.7rem;
+      }
+
+      .proj-table {
+        min-width: 380px;
+        font-size: 0.65rem;
+      }
+
+      .proj-table th,
+      .proj-table td {
+        padding: 4px 5px;
+      }
+    }
+
+    /* --- Very small phones (≤360px) --- */
+    @media (max-width: 360px) {
+      .calc-tab-btn {
+        font-size: 0.66rem;
+        padding: 10px 4px;
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr !important;
+        gap: 6px;
+      }
+
+      .rc-value {
+        font-size: 1rem !important;
+      }
+
+      .rc-value.small {
+        font-size: 0.88rem !important;
+      }
+
+      .result-card {
+        padding: 12px !important;
+      }
+
+      .two-pot-row {
+        grid-template-columns: 1fr !important;
+      }
+
+      .pot-tile-val {
+        font-size: 0.85rem;
+      }
+
+      .calc-accordion-toggle {
         font-size: 0.72rem;
+        padding: 11px 12px;
+        min-height: 44px;
       }
 
-      .tax-row.tr-highlight {
-        padding: 7px 10px;
-      }
-
-      .tax-row.tr-highlight .tr-val {
-        font-size: 0.82rem;
+      .proj-table {
+        min-width: 340px;
+        font-size: 0.62rem;
       }
     }
 
@@ -3258,10 +3494,17 @@
       <p class="section-subheading reveal">Illustrative projections using 2025/2026 South African tax rules. All figures
         are estimates — not financial advice.</p>
 
+      <!-- Mobile tab bar (hidden on desktop via CSS) -->
+      <div class="calc-tabs reveal" id="calc-tabs">
+        <button class="calc-tab-btn active" data-tab="inputs" type="button">Inputs</button>
+        <button class="calc-tab-btn" data-tab="results" type="button">Results</button>
+        <button class="calc-tab-btn" data-tab="breakdown" type="button">Breakdown</button>
+      </div>
+
       <div class="calc-layout reveal">
 
         <!-- ===== INPUT PANEL ===== -->
-        <div class="calc-inputs">
+        <div class="calc-inputs calc-panel-active" data-panel="inputs">
 
           <div class="calc-group-title">Personal Details</div>
 
@@ -3370,8 +3613,8 @@
         </div>
         <!-- /calc-inputs -->
 
-        <!-- ===== RESULTS PANEL ===== -->
-        <div class="calc-results" id="calc-results">
+        <!-- ===== RESULTS PANEL (key metrics only on mobile) ===== -->
+        <div class="calc-results" id="calc-results" data-panel="results">
 
           <!-- Key Metrics -->
           <div class="results-grid">
@@ -3397,111 +3640,138 @@
             </div>
           </div>
 
+          <!-- On desktop, detail panels render here too (cloned via CSS visibility) -->
+        </div>
+        <!-- /calc-results -->
+
+        <!-- ===== BREAKDOWN PANEL (accordions on mobile, inline on desktop) ===== -->
+        <div class="calc-breakdown" id="calc-breakdown" data-panel="breakdown">
+
           <!-- RA Tax Saving -->
-          <div class="results-panel">
-            <h4>RA Tax Analysis — Current Tax Year (2025/2026)</h4>
-            <div class="tax-rows">
-              <div class="tax-row">
-                <span class="tr-label">Gross Annual Income</span>
-                <span class="tr-val" id="r-grossIncome">—</span>
-              </div>
-              <div class="tax-row">
-                <span class="tr-label">Allowable RA Deduction (27.5%, max R430k)</span>
-                <span class="tr-val" id="r-raDeduction">—</span>
-              </div>
-              <div class="tax-row">
-                <span class="tr-label">Taxable Income (after deduction)</span>
-                <span class="tr-val" id="r-taxableIncome">—</span>
-              </div>
-              <div class="tax-row">
-                <span class="tr-label">Income Tax Without RA Deduction</span>
-                <span class="tr-val" id="r-taxWithout">—</span>
-              </div>
-              <div class="tax-row">
-                <span class="tr-label">Income Tax With RA Deduction</span>
-                <span class="tr-val" id="r-taxWith">—</span>
-              </div>
-              <div class="tax-row">
-                <span class="tr-label">Marginal Tax Rate</span>
-                <span class="tr-val" id="r-margRate">—</span>
-              </div>
-              <div class="tax-row tr-highlight">
-                <span class="tr-label">Annual RA Tax Saving</span>
-                <span class="tr-val" id="r-taxSaving">—</span>
-              </div>
-              <div class="tax-row tr-highlight">
-                <span class="tr-label">Effective Net RA Cost (after tax relief)</span>
-                <span class="tr-val" id="r-netRaCost">—</span>
+          <div class="calc-accordion-item">
+            <button class="calc-accordion-toggle" type="button">RA Tax Analysis — 2025/2026</button>
+            <div class="calc-accordion-body">
+              <div class="results-panel">
+                <h4>RA Tax Analysis — Current Tax Year (2025/2026)</h4>
+                <div class="tax-rows">
+                  <div class="tax-row">
+                    <span class="tr-label">Gross Annual Income</span>
+                    <span class="tr-val" id="r-grossIncome">—</span>
+                  </div>
+                  <div class="tax-row">
+                    <span class="tr-label">Allowable RA Deduction (27.5%, max R430k)</span>
+                    <span class="tr-val" id="r-raDeduction">—</span>
+                  </div>
+                  <div class="tax-row">
+                    <span class="tr-label">Taxable Income (after deduction)</span>
+                    <span class="tr-val" id="r-taxableIncome">—</span>
+                  </div>
+                  <div class="tax-row">
+                    <span class="tr-label">Income Tax Without RA Deduction</span>
+                    <span class="tr-val" id="r-taxWithout">—</span>
+                  </div>
+                  <div class="tax-row">
+                    <span class="tr-label">Income Tax With RA Deduction</span>
+                    <span class="tr-val" id="r-taxWith">—</span>
+                  </div>
+                  <div class="tax-row">
+                    <span class="tr-label">Marginal Tax Rate</span>
+                    <span class="tr-val" id="r-margRate">—</span>
+                  </div>
+                  <div class="tax-row tr-highlight">
+                    <span class="tr-label">Annual RA Tax Saving</span>
+                    <span class="tr-val" id="r-taxSaving">—</span>
+                  </div>
+                  <div class="tax-row tr-highlight">
+                    <span class="tr-label">Effective Net RA Cost (after tax relief)</span>
+                    <span class="tr-val" id="r-netRaCost">—</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Two-Pot Breakdown -->
-          <div class="results-panel">
-            <h4>Two-Pot System — Estimated Split at Retirement</h4>
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;">
-              Based on Two-Pot rules (effective 1 Sep 2024): ⅓ of new contributions → Savings Pot (accessible); ⅔ →
-              Retirement Pot (locked until retirement). Existing balance treated as Vested Pot.
-            </p>
-            <div class="two-pot-row">
-              <div class="pot-tile">
-                <div class="pot-tile-label">Savings Pot</div>
-                <div class="pot-tile-val" id="r-savingsPot">—</div>
-                <div class="pot-tile-sub">⅓ of future contributions</div>
-              </div>
-              <div class="pot-tile">
-                <div class="pot-tile-label">Retirement Pot</div>
-                <div class="pot-tile-val" id="r-retirementPot">—</div>
-                <div class="pot-tile-sub">⅔ of future contributions</div>
-              </div>
-              <div class="pot-tile">
-                <div class="pot-tile-label">Vested Pot</div>
-                <div class="pot-tile-val" id="r-vestedPot">—</div>
-                <div class="pot-tile-sub">pre-Sep 2024 balance</div>
+          <div class="calc-accordion-item">
+            <button class="calc-accordion-toggle" type="button">Two-Pot System Breakdown</button>
+            <div class="calc-accordion-body">
+              <div class="results-panel">
+                <h4>Two-Pot System — Estimated Split at Retirement</h4>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;">
+                  Based on Two-Pot rules (effective 1 Sep 2024): ⅓ of new contributions → Savings Pot (accessible); ⅔ →
+                  Retirement Pot (locked until retirement). Existing balance treated as Vested Pot.
+                </p>
+                <div class="two-pot-row">
+                  <div class="pot-tile">
+                    <div class="pot-tile-label">Savings Pot</div>
+                    <div class="pot-tile-val" id="r-savingsPot">—</div>
+                    <div class="pot-tile-sub">⅓ of future contributions</div>
+                  </div>
+                  <div class="pot-tile">
+                    <div class="pot-tile-label">Retirement Pot</div>
+                    <div class="pot-tile-val" id="r-retirementPot">—</div>
+                    <div class="pot-tile-sub">⅔ of future contributions</div>
+                  </div>
+                  <div class="pot-tile">
+                    <div class="pot-tile-label">Vested Pot</div>
+                    <div class="pot-tile-val" id="r-vestedPot">—</div>
+                    <div class="pot-tile-sub">pre-Sep 2024 balance</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- TFSA Panel -->
-          <div class="results-panel">
-            <h4>Tax-Free Savings Account (TFSA) Projection</h4>
-            <div class="tax-rows">
-              <div class="tax-row">
-                <span class="tr-label">Projected TFSA at Retirement (today's rands)</span>
-                <span class="tr-val" id="r-tfsaProj">—</span>
-              </div>
-              <div class="tax-row">
-                <span class="tr-label">Annual TFSA Contribution</span>
-                <span class="tr-val" id="r-tfsaAnnual">—</span>
-              </div>
-              <div class="tax-row">
-                <span class="tr-label">TFSA Lifetime Limit Remaining</span>
-                <span class="tr-val" id="r-tfsaRemaining">—</span>
+          <div class="calc-accordion-item">
+            <button class="calc-accordion-toggle" type="button">TFSA Projection</button>
+            <div class="calc-accordion-body">
+              <div class="results-panel">
+                <h4>Tax-Free Savings Account (TFSA) Projection</h4>
+                <div class="tax-rows">
+                  <div class="tax-row">
+                    <span class="tr-label">Projected TFSA at Retirement (today's rands)</span>
+                    <span class="tr-val" id="r-tfsaProj">—</span>
+                  </div>
+                  <div class="tax-row">
+                    <span class="tr-label">Annual TFSA Contribution</span>
+                    <span class="tr-val" id="r-tfsaAnnual">—</span>
+                  </div>
+                  <div class="tax-row">
+                    <span class="tr-label">TFSA Lifetime Limit Remaining</span>
+                    <span class="tr-val" id="r-tfsaRemaining">—</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Year-by-Year Projection -->
-          <div class="results-panel">
-            <h4>Year-by-Year Accumulation Projection</h4>
-            <label class="nominal-toggle">
-              <input type="checkbox" id="c-showNominal" />
-              Show nominal (future) rands instead of today's rands
-            </label>
-            <div class="proj-table-wrap">
-              <table class="proj-table" id="proj-table">
-                <thead>
-                  <tr>
-                    <th>Age</th>
-                    <th>Year</th>
-                    <th>Annual Contribution</th>
-                    <th>Retirement Fund</th>
-                    <th>TFSA</th>
-                    <th>Combined</th>
-                  </tr>
-                </thead>
-                <tbody id="proj-tbody"></tbody>
-              </table>
+          <div class="calc-accordion-item">
+            <button class="calc-accordion-toggle" type="button">Year-by-Year Projection</button>
+            <div class="calc-accordion-body" id="projectionAccordion">
+              <div class="results-panel">
+                <h4>Year-by-Year Accumulation Projection</h4>
+                <label class="nominal-toggle">
+                  <input type="checkbox" id="c-showNominal" />
+                  Show nominal (future) rands instead of today's rands
+                </label>
+                <div class="proj-table-wrap">
+                  <table class="proj-table" id="proj-table">
+                    <thead>
+                      <tr>
+                        <th>Age</th>
+                        <th>Year</th>
+                        <th>Annual Contribution</th>
+                        <th>Retirement Fund</th>
+                        <th>TFSA</th>
+                        <th>Combined</th>
+                      </tr>
+                    </thead>
+                    <tbody id="proj-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -3526,7 +3796,8 @@
           </div>
 
         </div>
-        <!-- /calc-results -->
+        <!-- /calc-breakdown -->
+
       </div>
       <!-- /calc-layout -->
 
@@ -4272,7 +4543,6 @@
       const replRatio      = 0.75;  // fixed 75% replacement ratio
       const drawdown       = 0.04;  // fixed 4% drawdown rate
       const ter            = 0.015; // fixed 1.5% TER
-      const showNominal    = !!document.getElementById('c-showNominal').checked;
 
       const portfolioSel   = document.getElementById('c-portfolioType').value;
       const allowedPortfolios = ['7.5', '10', '11.5', 'custom'];
@@ -4408,38 +4678,32 @@
       setText('r-tfsaAnnual',    fmtR(tfsaAnnual) + '/year' + (tfsaAnnual > 46000 ? ' ⚠ exceeds R46,000 limit' : ''));
       setText('r-tfsaRemaining', fmtR(tfsaRemaining) + ' lifetime limit remaining');
 
-      // ---- Year-by-year table (safe DOM construction — no innerHTML) ----
-      const tbody = document.getElementById('proj-tbody');
-      while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
-      rows.forEach(r => {
-        const nominal = showNominal;
-        const rf  = nominal ? r.retireNominal   : r.retireReal;
-        const tf  = nominal ? r.tfsaNominal      : r.tfsaReal;
-        const cf  = nominal ? r.combinedNominal  : r.combinedReal;
-        const ac  = nominal ? r.annualContrib     : r.annualContrib / Math.pow(1 + inflation, r.yr);
-        const tr  = document.createElement('tr');
-        if (r.isRetirementYear) tr.className = 'retirement-row';
-        const cellData = [
-          r.age + (r.isRetirementYear ? ' \u2605' : ''),
-          r.yr,
-          fmtR(ac),
-          fmtR(rf),
-          fmtR(tf),
-          fmtR(cf)
-        ];
-        cellData.forEach(text => {
-          const td = document.createElement('td');
-          td.textContent = String(text);
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
+      // ---- Cache rows for lazy table rendering ----
+      calcRowsCache = rows;
+      tableNeedsRender = true;
+      // Only render table DOM if it's currently visible (desktop or open accordion)
+      if (isTableVisible()) {
+        renderProjectionTable();
+      }
     }
 
     function setText(id, text) {
       const el = document.getElementById(id);
       if (el) el.textContent = text;
     }
+
+    // ---- Debounce helper ----
+    function debounce(fn, ms) {
+      let timer;
+      return function() {
+        clearTimeout(timer);
+        timer = setTimeout(fn, ms);
+      };
+    }
+
+    // ---- Lazy table flag ----
+    let calcRowsCache = [];
+    let tableNeedsRender = true;
 
     // ---- Wire up all input events ----
     function bindCalcInputs() {
@@ -4449,20 +4713,24 @@
         '#c-tfsaBalance, #c-monthlyTFSA, #c-portfolioType, #c-customReturn, ' +
         '#c-showNominal'
       );
-      allInputs.forEach(el => el.addEventListener('input', onCalcInput));
-      allInputs.forEach(el => el.addEventListener('change', onCalcInput));
+      const debouncedCalc = debounce(runCalculator, 150);
+      allInputs.forEach(el => {
+        el.addEventListener('input', function() { onCalcInput(debouncedCalc); });
+        el.addEventListener('change', function() { onCalcInput(debouncedCalc); });
+      });
     }
 
-    function onCalcInput() {
-      // Sync range display labels
+    function onCalcInput(debouncedCalc) {
+      // Sync range display labels (instant, no debounce)
       syncRange('c-customReturn','val-customReturn', v => v.toFixed(1) + '%');
 
-      // Show/hide custom return field
+      // Show/hide custom return field (instant)
       const portfolioType = document.getElementById('c-portfolioType').value;
       document.getElementById('customReturnField').style.display =
         portfolioType === 'custom' ? '' : 'none';
 
-      runCalculator();
+      tableNeedsRender = true;
+      debouncedCalc();
     }
 
     function syncRange(rangeId, valId, fmt) {
@@ -4471,10 +4739,97 @@
       if (el && lbl) lbl.textContent = fmt(+el.value);
     }
 
+    // ---- Render projection table (lazy — only when visible) ----
+    function renderProjectionTable() {
+      if (!tableNeedsRender && calcRowsCache.length === 0) return;
+      const showNominal = !!document.getElementById('c-showNominal').checked;
+      const inflation = 0.055;
+      const tbody = document.getElementById('proj-tbody');
+      while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+      calcRowsCache.forEach(function(r) {
+        const nominal = showNominal;
+        const rf  = nominal ? r.retireNominal   : r.retireReal;
+        const tf  = nominal ? r.tfsaNominal      : r.tfsaReal;
+        const cf  = nominal ? r.combinedNominal  : r.combinedReal;
+        const ac  = nominal ? r.annualContrib     : r.annualContrib / Math.pow(1 + inflation, r.yr);
+        const tr  = document.createElement('tr');
+        if (r.isRetirementYear) tr.className = 'retirement-row';
+        var cellData = [
+          r.age + (r.isRetirementYear ? ' \u2605' : ''),
+          r.yr,
+          fmtR(ac),
+          fmtR(rf),
+          fmtR(tf),
+          fmtR(cf)
+        ];
+        cellData.forEach(function(text) {
+          var td = document.createElement('td');
+          td.textContent = String(text);
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      tableNeedsRender = false;
+    }
+
+    function isTableVisible() {
+      var projAccordion = document.getElementById('projectionAccordion');
+      // On desktop, always visible. On mobile, only if accordion is open.
+      if (window.innerWidth > 768) return true;
+      return projAccordion && projAccordion.classList.contains('accordion-open');
+    }
+
+    // ---- Mobile tab switching ----
+    function initCalcTabs() {
+      var tabBtns = document.querySelectorAll('.calc-tab-btn');
+      tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var tabName = btn.getAttribute('data-tab');
+          // Update active button
+          tabBtns.forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          // Show/hide panels
+          var panels = document.querySelectorAll('[data-panel]');
+          panels.forEach(function(p) {
+            p.classList.remove('calc-panel-active');
+            if (p.getAttribute('data-panel') === tabName) {
+              p.classList.add('calc-panel-active');
+            }
+          });
+          // If switching to breakdown and table needs render, do it
+          if (tabName === 'breakdown' && isTableVisible()) {
+            renderProjectionTable();
+          }
+        });
+      });
+    }
+
+    // ---- Mobile accordion toggles ----
+    function initCalcAccordions() {
+      document.querySelectorAll('.calc-accordion-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+          var body = toggle.nextElementSibling;
+          var isOpen = toggle.classList.contains('accordion-open');
+          toggle.classList.toggle('accordion-open', !isOpen);
+          body.classList.toggle('accordion-open', !isOpen);
+          // Lazy-render table when its accordion opens
+          if (!isOpen && body.id === 'projectionAccordion') {
+            renderProjectionTable();
+          }
+        });
+      });
+    }
+
     // Boot on DOM ready
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function() {
       bindCalcInputs();
       runCalculator();
+      initCalcTabs();
+      initCalcAccordions();
+      // On desktop, render table immediately
+      if (window.innerWidth > 768) {
+        renderProjectionTable();
+      }
     });
 
     /* ---------------------------------------------------------------
